@@ -8,7 +8,7 @@ namespace NStructurizr.Core.Model
     {
 
         private SoftwareSystem parent;
-        private String technology;
+        public String technology { get; set; }
 
         private ISet<Component> components = new HashSet<Component>();
 
@@ -28,20 +28,10 @@ namespace NStructurizr.Core.Model
             this.parent = parent;
         }
 
-        public String getTechnology()
-        {
-            return technology;
-        }
-
-        public void setTechnology(String technology)
-        {
-            this.technology = technology;
-        }
-
         public Component addComponentOfType(String interfaceType, String implementationType, String description, String technology)
         {
             Component component = getModel().addComponentOfType(this, interfaceType, implementationType, description);
-            component.setTechnology(technology);
+            component.technology = (technology);
 
             return component;
         }
@@ -54,7 +44,7 @@ namespace NStructurizr.Core.Model
         public Component addComponent(String name, String description, String technology)
         {
             Component c = getModel().addComponent(this, name, description);
-            c.setTechnology(technology);
+            c.technology = (technology);
             return c;
         }
 
@@ -97,20 +87,20 @@ namespace NStructurizr.Core.Model
                 return null;
             }
 
-            Component component = components.FirstOrDefault(c => type.Equals(c.getInterfaceType()));
+            Component component = components.FirstOrDefault(c => type.Equals(c.interfaceType));
 
             if (component != null)
             {
                 return component;
             }
 
-            component = components.FirstOrDefault(c => type.Equals(c.getImplementationType()));
+            component = components.FirstOrDefault(c => type.Equals(c.implementationType));
             return component;
         }
 
-        public override ElementType getType()
+        public override ElementType type
         {
-            return ElementType.Container;
+            get {return ElementType.Container;}
         }
 
         public override String getCanonicalName()

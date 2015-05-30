@@ -55,7 +55,7 @@ namespace NStructurizr.Core.Model
             return "{" + id + " | " + name + " | " + description + "}";
         }
 
-        public abstract ElementType getType();
+        public abstract ElementType type { get; }
 
         // TODO: @JsonIgnore
         public abstract String getCanonicalName();

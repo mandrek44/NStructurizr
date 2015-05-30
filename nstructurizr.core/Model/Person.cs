@@ -29,9 +29,9 @@ namespace NStructurizr.Core.Model
             }
         }
 
-        public override ElementType getType()
+        public override ElementType type
         {
-            return ElementType.Person;
+            get { return ElementType.Person; }
         }
 
         public override String getCanonicalName()

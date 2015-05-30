@@ -126,7 +126,7 @@ namespace NStructurizr.Core.Model
                 Container container = new Container();
                 container.name  = (name);
                 container.description = (description);
-                container.setTechnology(technology);
+                container.technology = (technology);
 
                 container.setParent(parent);
                 parent.add(container);
@@ -145,8 +145,8 @@ namespace NStructurizr.Core.Model
         public Component addComponentOfType(Container parent, String interfaceType, String implementationType, String description)
         {
             Component component = new Component();
-            component.setInterfaceType(interfaceType);
-            component.setImplementationType(implementationType);
+            component.interfaceType = (interfaceType);
+            component.implementationType = (implementationType);
             component.description = (description);
 
             component.setParent(parent);

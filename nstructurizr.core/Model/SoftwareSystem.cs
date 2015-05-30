@@ -120,9 +120,9 @@ namespace NStructurizr.Core.Model
             return relationship;
         }
 
-        public override ElementType getType()
+        public override ElementType type
         {
-            return ElementType.SoftwareSystem;
+            get { return ElementType.SoftwareSystem; }
         }
 
         public override String getCanonicalName()

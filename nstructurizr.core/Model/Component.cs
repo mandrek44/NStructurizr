@@ -7,10 +7,10 @@ namespace NStructurizr.Core.Model
 
         private Container parent;
 
-        private String technology = "";
-        private String interfaceType;
-        private String implementationType;
-        private String sourcePath;
+        public String technology { get; set; }
+        public String interfaceType { get; set; }
+        public String implementationType { get; set; }
+        public String sourcePath { get; set; }
 
         public Component()
         {
@@ -27,47 +27,6 @@ namespace NStructurizr.Core.Model
         {
             this.parent = parent;
         }
-
-        public String getTechnology()
-        {
-            return technology;
-        }
-
-        public void setTechnology(String technology)
-        {
-            this.technology = technology;
-        }
-
-        public String getInterfaceType()
-        {
-            return interfaceType;
-        }
-
-        public void setInterfaceType(String interfaceType)
-        {
-            this.interfaceType = interfaceType;
-        }
-
-        public String getImplementationType()
-        {
-            return implementationType;
-        }
-
-        public void setImplementationType(String implementationType)
-        {
-            this.implementationType = implementationType;
-        }
-
-        public String getSourcePath()
-        {
-            return sourcePath;
-        }
-
-        public void setSourcePath(String sourcePath)
-        {
-            this.sourcePath = sourcePath;
-        }
-
 
         public override String name
         {
@@ -99,9 +58,9 @@ namespace NStructurizr.Core.Model
             return interfaceType.Substring(0, interfaceType.LastIndexOf("."));
         }
 
-        public override ElementType getType()
+        public override ElementType type
         {
-            return ElementType.Component;
+            get { return ElementType.Component; }
         }
 
         public override String getCanonicalName()
