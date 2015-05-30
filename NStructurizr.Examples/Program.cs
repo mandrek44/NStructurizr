@@ -26,6 +26,7 @@ namespace NStructurizr.Examples
 
     public static void main() {
         Workspace workspace = new Workspace("Financial Risk System", "This is a simple (incomplete) example C4 model based upon the financial risk system architecture kata, which can be found at http://bit.ly/sa4d-risksystem");
+        workspace.id = 1491;
         Model model = workspace.model;
 
         // create the basic model
@@ -73,8 +74,8 @@ namespace NStructurizr.Examples
         Console.WriteLine(workspaceJson);
 
         // and upload the model to structurizr.com
-        //StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "key", "secret");
-        //structurizrClient.mergeWorkspace(31, workspace);
+        StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "key", "secret");
+        structurizrClient.putWorkspace(workspace);
 
         Console.ReadKey();
     }

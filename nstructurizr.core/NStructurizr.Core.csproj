@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs" />
     <Compile Include="View\ComponentView.cs" />
     <Compile Include="View\Configuration.cs" />
     <Compile Include="View\ContainerView.cs" />
