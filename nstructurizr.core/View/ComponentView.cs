@@ -96,8 +96,8 @@ namespace NStructurizr.Core.View
             removeElement(component);
         }
 
-        public override ViewType getType() {
-            return ViewType.Component;
+        public override ViewType type {
+            get { return ViewType.Component; }
         }
 
         public override String getName() {

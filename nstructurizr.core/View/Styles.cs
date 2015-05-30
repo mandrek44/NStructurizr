@@ -3,9 +3,14 @@ using System.Collections.ObjectModel;
 namespace NStructurizr.Core.View
 {
     public class Styles {
+        public Styles()
+        {
+            elements = new Collection<ElementStyle>();
+            relationships = new Collection<RelationshipStyle>();
+        }
 
-        private Collection<ElementStyle> elements = new Collection<ElementStyle>();
-        private Collection<RelationshipStyle> relationships = new Collection<RelationshipStyle>();
+        public Collection<ElementStyle> elements { get; private set; }
+        public Collection<RelationshipStyle> relationships { get; private set; }
 
         public Collection<ElementStyle> getElements() {
             return elements;

@@ -4,55 +4,45 @@ using NStructurizr.Core.Model;
 
 namespace NStructurizr.Core.View
 {
-    public class RelationshipView {
+    public class RelationshipView
+    {
 
         private Relationship relationship;
-        private String id;
-        private Collection<Vertex> vertices = new Collection<Vertex>();
+        public String id { get; set; }
+        public Collection<Vertex> vertices { get; set; }
 
-        RelationshipView() {
+        RelationshipView()
+        {
+            vertices = new Collection<Vertex>();
         }
 
-        public RelationshipView(Relationship relationship) {
+        public RelationshipView(Relationship relationship)
+        {
+            vertices = new Collection<Vertex>();
             this.relationship = relationship;
-        }
-
-        public String getId() {
-            if (relationship != null) {
-                return relationship.id;
-            } else {
-                return this.id;
-            }
-        }
-
-        void setId(String id) {
-            this.id = id;
         }
 
         // TODO: @JsonIgnore
-        public Relationship getRelationship() {
+        public Relationship getRelationship()
+        {
             return relationship;
         }
 
-        public void setRelationship(Relationship relationship) {
+        public void setRelationship(Relationship relationship)
+        {
             this.relationship = relationship;
         }
 
-        public Collection<Vertex> getVertices() {
-            return vertices;
-        }
-
-        public void setVertices(Collection<Vertex> vertices) {
-            this.vertices = vertices;
-        }
-
-        public void copyLayoutInformationFrom(RelationshipView source) {
-            if (source != null) {
-                setVertices(source.getVertices());
+        public void copyLayoutInformationFrom(RelationshipView source)
+        {
+            if (source != null)
+            {
+                vertices = source.vertices;
             }
         }
 
-        public override String ToString() {
+        public override String ToString()
+        {
             return relationship.ToString();
         }
 

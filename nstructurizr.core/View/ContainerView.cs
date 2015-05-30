@@ -28,8 +28,8 @@ namespace NStructurizr.Core.View
             getSoftwareSystem().containers.ForEach(addElement);
         }
 
-        public override ViewType getType() {
-            return ViewType.Container;
+        public override ViewType type {
+            get { return ViewType.Container; }
         }
 
         public override String getName() {

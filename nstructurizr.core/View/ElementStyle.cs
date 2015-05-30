@@ -7,22 +7,22 @@ namespace NStructurizr.Core.View
         public static readonly int DEFAULT_WIDTH = 450;
         public static readonly int DEFAULT_HEIGHT = 300;
 
-        private String tag { get; set; }
+        public String tag { get; private set; }
 
         // TODO: @JsonInclude(value = JsonInclude.Include.NON_NULL)
-        private int? width { get; set; }
+        public int? width { get; private set; }
 
         // TODO: @JsonInclude(value = JsonInclude.Include.NON_NULL)
-        private int? height { get; set; }
+        public int? height { get; private set; }
 
         // TODO: @JsonInclude(value = JsonInclude.Include.NON_NULL)
-        private String background { get; set; }
+        public String background { get; private set; }
 
         // TODO: @JsonInclude(value = JsonInclude.Include.NON_NULL)
-        private String color { get; set; }
+        public String color { get; private set; }
 
         // TODO: @JsonInclude(value = JsonInclude.Include.NON_NULL)
-        private int? fontSize { get; set; }
+        public int? fontSize { get; private set; }
 
         public ElementStyle() {
         }

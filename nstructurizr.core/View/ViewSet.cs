@@ -8,17 +8,23 @@ namespace NStructurizr.Core.View
 
         private Model.Model model;
 
-        private Collection<SystemContextView> systemContextViews = new Collection<SystemContextView>();
+        private Collection<SystemContextView> _systemContextViews = new Collection<SystemContextView>();
         private Collection<ContainerView> containerViews = new Collection<ContainerView>();
         private Collection<ComponentView> componentViews = new Collection<ComponentView>();
 
+        public Collection<SystemContextView> systemContextViews
+        {
+            get { return new Collection<SystemContextView>(_systemContextViews);}
+        }
+
         private Styles styles = new Styles();
-        private Configuration configuration = new Configuration();
+        public Configuration configuration { get; private set; }
 
         ViewSet() {
         }
 
         public ViewSet(Model.Model model) {
+            configuration = new Configuration();
             this.model = model;
         }
 
@@ -37,7 +43,7 @@ namespace NStructurizr.Core.View
 
         public SystemContextView createContextView(SoftwareSystem softwareSystem, String description) {
             SystemContextView view = new SystemContextView(softwareSystem, description);
-            systemContextViews.Add(view);
+            _systemContextViews.Add(view);
 
             return view;
         }
@@ -64,10 +70,6 @@ namespace NStructurizr.Core.View
             return view;
         }
 
-        public Collection<SystemContextView> getSystemContextViews() {
-            return new Collection<SystemContextView>(systemContextViews);
-        }
-
         public Collection<ContainerView> getContainerViews() {
             return new Collection<ContainerView>(containerViews);
         }
@@ -77,7 +79,7 @@ namespace NStructurizr.Core.View
         }
 
         public void hydrate() {
-            systemContextViews.ForEach(hydrateView);
+            _systemContextViews.ForEach(hydrateView);
             containerViews.ForEach(hydrateView);
             componentViews.ForEach(hydrateView);
             foreach (ComponentView view in componentViews) {
@@ -87,13 +89,13 @@ namespace NStructurizr.Core.View
         }
 
         private void hydrateView(View view) {
-            view.setSoftwareSystem(model.getSoftwareSystemWithId(view.getSoftwareSystemId()));
+            view.setSoftwareSystem(model.getSoftwareSystemWithId(view.softwareSystemId));
 
-            foreach (ElementView elementView in view.getElements()) {
-                elementView.setElement(model.getElement(elementView.getId()));
+            foreach (ElementView elementView in view.elements) {
+                elementView.setElement(model.getElement(elementView.id));
             }
-            foreach (RelationshipView relationshipView in view.getRelationships()) {
-                relationshipView.setRelationship(model.getRelationship(relationshipView.getId()));
+            foreach (RelationshipView relationshipView in view.relationships) {
+                relationshipView.setRelationship(model.getRelationship(relationshipView.id));
             }
         }
 
@@ -102,12 +104,8 @@ namespace NStructurizr.Core.View
             return styles;
         }
 
-        public Configuration getConfiguration() {
-            return configuration;
-        }
-
         public void copyLayoutInformationFrom(ViewSet source) {
-            foreach (SystemContextView sourceView in source.getSystemContextViews()) {
+            foreach (SystemContextView sourceView in source.systemContextViews) {
                 SystemContextView destinationView = findSystemContextView(sourceView);
                 if (destinationView != null) {
                     destinationView.copyLayoutInformationFrom(sourceView);
@@ -130,7 +128,7 @@ namespace NStructurizr.Core.View
         }
 
         private SystemContextView findSystemContextView(SystemContextView systemContextView) {
-            foreach (SystemContextView view in systemContextViews) {
+            foreach (SystemContextView view in _systemContextViews) {
                 if (view.getTitle().Equals(systemContextView.getTitle())) {
                     return view;
                 }

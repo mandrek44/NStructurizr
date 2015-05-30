@@ -28,8 +28,8 @@ namespace NStructurizr.Core.View
             addElement(softwareSystem);
         }
 
-        public override ViewType getType() {
-            return ViewType.SystemContext;
+        public override ViewType type {
+            get { return ViewType.SystemContext; }
         }
 
         public override String getName() {

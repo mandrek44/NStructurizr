@@ -61,15 +61,15 @@ namespace NStructurizr.Examples
 
         // tag and style some elements
         financialRiskSystem.addTags("Risk System");
-        viewSet.getConfiguration().getStyles().add(new ElementStyle("Risk System", null, null, "#550000", "#ffffff", null));
-        viewSet.getConfiguration().getStyles().add(new ElementStyle(Tags.SOFTWARE_SYSTEM, null, null, "#801515", "#ffffff", null));
-        viewSet.getConfiguration().getStyles().add(new ElementStyle(Tags.PERSON, null, null, "#d46a6a", "#ffffff", null));
-        viewSet.getConfiguration().getStyles().add(new RelationshipStyle(Tags.RELATIONSHIP, null, null, false, null, null));
-        viewSet.getConfiguration().getStyles().add(new RelationshipStyle(TAG_ASYNCHRONOUS, null, null, true, null, null));
-        viewSet.getConfiguration().getStyles().add(new RelationshipStyle(TAG_ALERT, null, "#ff0000", false, null, null));
+        viewSet.configuration.styles.add(new ElementStyle("Risk System", null, null, "#550000", "#ffffff", null));
+        viewSet.configuration.styles.add(new ElementStyle(Tags.SOFTWARE_SYSTEM, null, null, "#801515", "#ffffff", null));
+        viewSet.configuration.styles.add(new ElementStyle(Tags.PERSON, null, null, "#d46a6a", "#ffffff", null));
+        viewSet.configuration.styles.add(new RelationshipStyle(Tags.RELATIONSHIP, null, null, false, null, null));
+        viewSet.configuration.styles.add(new RelationshipStyle(TAG_ASYNCHRONOUS, null, null, true, null, null));
+        viewSet.configuration.styles.add(new RelationshipStyle(TAG_ALERT, null, "#ff0000", false, null, null));
 
         // output the model as JSON
-        var workspaceJson = JsonConvert.SerializeObject(workspace);
+        var workspaceJson = JsonConvert.SerializeObject(workspace, Formatting.Indented);
         Console.WriteLine(workspaceJson);
 
         // and upload the model to structurizr.com

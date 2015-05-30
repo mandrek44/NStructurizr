@@ -6,14 +6,17 @@ namespace NStructurizr.Core.View
     public class ElementView {
 
         private Element element;
-        private String id;
-        private int x;
-        private int y;
+        public String id { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
 
-        ElementView() {
+        ElementView()
+        {
+            id = string.Empty;
         }
 
         public ElementView(Element element) {
+            id = string.Empty;
             this.element = element;
         }
 
@@ -26,47 +29,19 @@ namespace NStructurizr.Core.View
             this.element = element;
         }
 
-        public String getId() {
-            if (element != null) {
-                return element.id;
-            } else {
-                return this.id;
-            }
-        }
-
-        void setId(String id) {
-            this.id = id;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
-
         public override bool Equals(Object o) {
             if (this == o) return true;
             if (o == null || GetType() != o.GetType()) return false;
 
             ElementView that = (ElementView) o;
 
-            if (!getId().Equals(that.getId())) return false;
+            if (!id.Equals(that.id)) return false;
 
             return true;
         }
 
         public override int GetHashCode() {
-            return getId().GetHashCode();
+            return id.GetHashCode();
         }
 
         public override String ToString() {
@@ -75,8 +50,8 @@ namespace NStructurizr.Core.View
 
         public void copyLayoutInformationFrom(ElementView source) {
             if (source != null) {
-                setX(source.getX());
-                setY(source.getY());
+                x = (source.x);
+                y = (source.y);
             }
         }
 

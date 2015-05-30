@@ -1,12 +1,11 @@
 namespace NStructurizr.Core.View
 {
     public class Configuration {
+        public Styles styles { get; private set; }
 
-        private Styles styles = new Styles();
-
-        public Styles getStyles() {
-            return styles;
+        public Configuration()
+        {
+            styles = new Styles();
         }
-
     }
 }

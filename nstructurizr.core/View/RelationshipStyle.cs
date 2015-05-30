@@ -3,18 +3,17 @@ using System;
 namespace NStructurizr.Core.View
 {
     public class RelationshipStyle {
+        public String tag { get; private set; }
 
-        private String tag { get; set; }
+        public int? thickness { get; private set; }
 
-        private int? thickness { get; set; }
+        public String color { get; private set; }
 
-        private String color { get; set; }
+        public int? fontSize { get; private set; }
 
-        private int? fontSize { get; set; }
+        public int? width { get; private set; }
 
-        private int? width { get; set; }
-
-        private Boolean dashed { get; set; }
+        public Boolean dashed { get; private set; }
 
         public RelationshipStyle() {
         }

@@ -17,32 +17,16 @@ namespace NStructurizr.Core.View
         public static readonly PaperSize Slide_4_3 = new PaperSize("Slide 4:3", Orientation.Landscape, 3306, 2480);
         public static readonly PaperSize Slide_16_9 = new PaperSize("Slide 16:9", Orientation.Landscape, 3510, 1974);
 
-        private String name;
-        private Orientation orientation;
-        private int width;
-        private int height;
+        public String name { get; private set; }
+        public Orientation orientation { get; private set; }
+        public int width { get; private set; }
+        public int height { get; private set; }
 
         private PaperSize(String name, Orientation orientation, int width, int height) {
             this.name = name;
             this.orientation = orientation;
             this.width = width;
             this.height = height;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Orientation getOrientation() {
-            return orientation;
-        }
-
-        public int getWidth() {
-            return width;
-        }
-
-        public int getHeight() {
-            return height;
         }
 
         public enum Orientation {
