@@ -41,7 +41,7 @@ namespace NStructurizr.Core.View
 
         public String getSoftwareSystemId() {
             if (this.softwareSystem != null) {
-                return this.softwareSystem.getId();
+                return this.softwareSystem.id;
             } else {
                 return this.softwareSystemId;
             }
@@ -85,7 +85,7 @@ namespace NStructurizr.Core.View
      * Adds all software systems in the model to this view.
      */
         public virtual void addAllSoftwareSystems() {
-            foreach (var system in getModel().getSoftwareSystems())
+            foreach (var system in getModel().softwareSystems)
             {
                 addElement(system);
             }
@@ -104,7 +104,7 @@ namespace NStructurizr.Core.View
      * Adds all software systems in the model to this view.
      */
         public void addAllPeople() {
-            foreach (var person in getModel().getPeople())
+            foreach (var person in getModel().people)
             {
                 addElement(person);
             }
@@ -168,7 +168,7 @@ namespace NStructurizr.Core.View
 
             foreach (var b in elements)
             {
-                foreach (var r in b.getRelationships())
+                foreach (var r in b.relationships)
                 {
                     relationships.Add(r);    
                 }
@@ -187,8 +187,8 @@ namespace NStructurizr.Core.View
             ISet<RelationshipView> relationships = getRelationships();
 
             ISet<String> elementIds = new HashSet<string>();
-            relationships.ForEach(rv => elementIds.Add(rv.getRelationship().getSourceId()));
-            relationships.ForEach(rv => elementIds.Add(rv.getRelationship().getDestinationId()));
+            relationships.ForEach(rv => elementIds.Add(rv.getRelationship().sourceId));
+            relationships.ForEach(rv => elementIds.Add(rv.getRelationship().destinationId));
 
             elementViews.RemoveIf(ev => !elementIds.Contains(ev.getId()));
         }
@@ -210,13 +210,13 @@ namespace NStructurizr.Core.View
         }
 
         private void findElementsToShow(Element startingElement, Element element, ISet<String> elementIdsToShow, ISet<String> elementIdsVisited) {
-            if (!elementIdsVisited.Contains(element.getId()) && elementViews.Contains(new ElementView(element))) {
-                elementIdsVisited.Add(element.getId());
-                elementIdsToShow.Add(element.getId());
+            if (!elementIdsVisited.Contains(element.id) && elementViews.Contains(new ElementView(element))) {
+                elementIdsVisited.Add(element.id);
+                elementIdsToShow.Add(element.id);
 
                 // check that we've not gone back to the starting point of the graph
                 if (!element.hasEfferentRelationshipWith(startingElement)) {
-                    element.getRelationships().ForEach(r => findElementsToShow(startingElement, r.getDestination(), elementIdsToShow, elementIdsVisited));
+                    element.relationships.ForEach(r => findElementsToShow(startingElement, r.getDestination(), elementIdsToShow, elementIdsVisited));
                 }
             }
         }

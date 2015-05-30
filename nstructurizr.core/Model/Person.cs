@@ -36,7 +36,7 @@ namespace NStructurizr.Core.Model
 
         public override String getCanonicalName()
         {
-            return CANONICAL_NAME_SEPARATOR + formatForCanonicalName(getName());
+            return CANONICAL_NAME_SEPARATOR + formatForCanonicalName(name);
         }
 
     }

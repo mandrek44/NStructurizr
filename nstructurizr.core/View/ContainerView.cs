@@ -16,7 +16,7 @@ namespace NStructurizr.Core.View
      * Adds all software systems in the model to this view.
      */
         public override void addAllSoftwareSystems() {
-            getModel().getSoftwareSystems()
+            getModel().softwareSystems
                 .Where(ss => ss != getSoftwareSystem())
                 .ForEach(addElement);
         }
@@ -25,7 +25,7 @@ namespace NStructurizr.Core.View
      * Adds all containers in the software system to this view.
      */
         public void addAllContainers() {
-            getSoftwareSystem().getContainers().ForEach(addElement);
+            getSoftwareSystem().containers.ForEach(addElement);
         }
 
         public override ViewType getType() {
@@ -33,7 +33,7 @@ namespace NStructurizr.Core.View
         }
 
         public override String getName() {
-            return getSoftwareSystem().getName() + " - Containers";
+            return getSoftwareSystem().name + " - Containers";
         }
 
         public override void addAllElements() {

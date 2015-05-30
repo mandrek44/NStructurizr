@@ -28,7 +28,7 @@ namespace NStructurizr.Core.View
 
         public String getId() {
             if (element != null) {
-                return element.getId();
+                return element.id;
             } else {
                 return this.id;
             }

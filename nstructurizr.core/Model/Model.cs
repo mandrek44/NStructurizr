@@ -12,11 +12,23 @@ namespace NStructurizr.Core.Model
         private readonly Dictionary<string, Element> elementsById = new Dictionary<string, Element>();
         private readonly Dictionary<string, Relationship> relationshipsById = new Dictionary<string, Relationship>();
 
-        private ISet<Person> people = new HashSet<Person>();
-        private ISet<SoftwareSystem> softwareSystems = new HashSet<SoftwareSystem>();
+        private ISet<Person> _people = new HashSet<Person>();
+
+        public ISet<Person> people
+        {
+            get {  return new HashSet<Person>(_people);}
+        }
+
+        private ISet<SoftwareSystem> _softwareSystems = new HashSet<SoftwareSystem>();
+
+        public ISet<SoftwareSystem> softwareSystems
+        {
+            get {  return new HashSet<SoftwareSystem>(_softwareSystems);}
+        }
 
         public Model()
         {
+
         }
 
         /**
@@ -46,13 +58,13 @@ namespace NStructurizr.Core.Model
             if (getSoftwareSystemWithName(name) == null)
             {
                 SoftwareSystem softwareSystem = new SoftwareSystem();
-                softwareSystem.setLocation(location);
-                softwareSystem.setName(name);
-                softwareSystem.setDescription(description);
+                softwareSystem.location = (location);
+                softwareSystem.name = (name);
+                softwareSystem.description = (description);
 
-                softwareSystems.Add(softwareSystem);
+                _softwareSystems.Add(softwareSystem);
 
-                softwareSystem.setId(idGenerator.generateId(softwareSystem));
+                softwareSystem.id = (idGenerator.generateId(softwareSystem));
                 addElementToInternalStructures(softwareSystem);
 
                 return softwareSystem;
@@ -91,12 +103,12 @@ namespace NStructurizr.Core.Model
             {
                 Person person = new Person();
                 person.setLocation(location);
-                person.setName(name);
-                person.setDescription(description);
+                person.name = (name);
+                person.description = (description);
 
-                people.Add(person);
+                _people.Add(person);
 
-                person.setId(idGenerator.generateId(person));
+                person.id = (idGenerator.generateId(person));
                 addElementToInternalStructures(person);
 
                 return person;
@@ -112,14 +124,14 @@ namespace NStructurizr.Core.Model
             if (parent.getContainerWithName(name) == null)
             {
                 Container container = new Container();
-                container.setName(name);
-                container.setDescription(description);
+                container.name  = (name);
+                container.description = (description);
                 container.setTechnology(technology);
 
                 container.setParent(parent);
                 parent.add(container);
 
-                container.setId(idGenerator.generateId(container));
+                container.id = idGenerator.generateId(container);
                 addElementToInternalStructures(container);
 
                 return container;
@@ -135,12 +147,12 @@ namespace NStructurizr.Core.Model
             Component component = new Component();
             component.setInterfaceType(interfaceType);
             component.setImplementationType(implementationType);
-            component.setDescription(description);
+            component.description = (description);
 
             component.setParent(parent);
             parent.add(component);
 
-            component.setId(idGenerator.generateId(component));
+            component.id = idGenerator.generateId(component);
             addElementToInternalStructures(component);
 
             return component;
@@ -149,13 +161,13 @@ namespace NStructurizr.Core.Model
         public Component addComponent(Container parent, String name, String description)
         {
             Component component = new Component();
-            component.setName(name);
-            component.setDescription(description);
+            component.name = (name);
+            component.description = (description);
 
             component.setParent(parent);
             parent.add(component);
 
-            component.setId(idGenerator.generateId(component));
+            component.id = idGenerator.generateId(component);
             addElementToInternalStructures(component);
 
             return component;
@@ -165,22 +177,22 @@ namespace NStructurizr.Core.Model
         {
             if (!relationship.getSource().has(relationship))
             {
-                relationship.setId(idGenerator.generateId(relationship));
+                relationship.id = (idGenerator.generateId(relationship));
                 relationship.getSource().addRelationship(relationship);
             }
         }
 
         private void addElementToInternalStructures(Element element)
         {
-            elementsById.Add(element.getId(), element);
+            elementsById.Add(element.id, element);
             element.setModel(this);
-            idGenerator.found(element.getId());
+            idGenerator.found(element.id);
         }
 
         private void addRelationshipToInternalStructures(Relationship relationship)
         {
-            relationshipsById.Add(relationship.getId(), relationship);
-            idGenerator.found(relationship.getId());
+            relationshipsById.Add(relationship.id, relationship);
+            idGenerator.found(relationship.id);
         }
 
         /**
@@ -201,34 +213,18 @@ namespace NStructurizr.Core.Model
             return relationshipsById[id];
         }
 
-        /**
-         * Gets a collection containing all of the Person instances in this model.
-         */
-        public IEnumerable<Person> getPeople()
-        {
-            return new HashSet<Person>(people);
-        }
-
-        /**
-         * Gets a collection containing all of the SoftwareSystem instances in this model.
-         */
-        public ISet<SoftwareSystem> getSoftwareSystems()
-        {
-            return new HashSet<SoftwareSystem>(softwareSystems);
-        }
-
         public void hydrate()
         {
             // add all of the elements to the model
-            foreach (var person in people)
+            foreach (var person in _people)
             {
                 addElementToInternalStructures(person);
             }
 
-            foreach (SoftwareSystem softwareSystem in softwareSystems)
+            foreach (SoftwareSystem softwareSystem in _softwareSystems)
             {
                 addElementToInternalStructures(softwareSystem);
-                foreach (Container container in softwareSystem.getContainers())
+                foreach (Container container in softwareSystem.containers)
                 {
                     softwareSystem.add(container);
                     addElementToInternalStructures(container);
@@ -243,15 +239,15 @@ namespace NStructurizr.Core.Model
             }
 
             // now hydrate the relationships
-            foreach (var person in people)
+            foreach (var person in _people)
             {
                 hydrateRelationships(person);
             }
 
-            foreach (SoftwareSystem softwareSystem in softwareSystems)
+            foreach (SoftwareSystem softwareSystem in _softwareSystems)
             {
                 hydrateRelationships(softwareSystem);
-                foreach (Container container in softwareSystem.getContainers())
+                foreach (Container container in softwareSystem.containers)
                 {
                     hydrateRelationships(container);
                     foreach (Component component in container.getComponents())
@@ -264,10 +260,10 @@ namespace NStructurizr.Core.Model
 
         private void hydrateRelationships(Element element)
         {
-            foreach (Relationship relationship in element.getRelationships())
+            foreach (Relationship relationship in element.relationships)
             {
-                relationship.setSource(getElement(relationship.getSourceId()));
-                relationship.setDestination(getElement(relationship.getDestinationId()));
+                relationship.setSource(getElement(relationship.sourceId));
+                relationship.setDestination(getElement(relationship.destinationId));
                 addRelationshipToInternalStructures(relationship);
             }
         }
@@ -286,9 +282,9 @@ namespace NStructurizr.Core.Model
          */
         public SoftwareSystem getSoftwareSystemWithName(String name)
         {
-            foreach (SoftwareSystem softwareSystem in getSoftwareSystems())
+            foreach (SoftwareSystem softwareSystem in softwareSystems)
             {
-                if (softwareSystem.getName().Equals(name))
+                if (softwareSystem.name.Equals(name))
                 {
                     return softwareSystem;
                 }
@@ -303,9 +299,9 @@ namespace NStructurizr.Core.Model
          */
         public SoftwareSystem getSoftwareSystemWithId(String id)
         {
-            foreach (SoftwareSystem softwareSystem in getSoftwareSystems())
+            foreach (SoftwareSystem softwareSystem in softwareSystems)
             {
-                if (softwareSystem.getId().Equals(id))
+                if (softwareSystem.id.Equals(id))
                 {
                     return softwareSystem;
                 }
@@ -320,9 +316,9 @@ namespace NStructurizr.Core.Model
          */
         public Person getPersonWithName(String name)
         {
-            foreach (Person person in getPeople())
+            foreach (Person person in people)
             {
-                if (person.getName().Equals(name))
+                if (person.name.Equals(name))
                 {
                     return person;
                 }

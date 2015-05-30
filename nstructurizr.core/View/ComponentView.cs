@@ -16,7 +16,7 @@ namespace NStructurizr.Core.View
 
         public String getContainerId() {
             if (this.container != null) {
-                return container.getId();
+                return container.id;
             } else {
                 return this.containerId;
             }
@@ -39,7 +39,7 @@ namespace NStructurizr.Core.View
      * Adds all software systems in the model to this view.
      */
         public override void addAllSoftwareSystems() {
-            getModel().getSoftwareSystems()
+            getModel().softwareSystems
                 .Where(ss => ss != getSoftwareSystem())
                 .ForEach(addElement);
         }
@@ -48,7 +48,7 @@ namespace NStructurizr.Core.View
      * Adds all containers in the software system to this view.
      */
         public void addAllContainers() {
-            getSoftwareSystem().getContainers()
+            getSoftwareSystem().containers
                 .Where(c => c != container)
                 .ForEach(addElement);
         }
@@ -101,7 +101,7 @@ namespace NStructurizr.Core.View
         }
 
         public override String getName() {
-            return getSoftwareSystem().getName() + " - " + getContainer().getName() + " - Components";
+            return getSoftwareSystem().name + " - " + getContainer().name + " - Components";
         }
 
         public override void addAllElements() {

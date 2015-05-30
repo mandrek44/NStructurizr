@@ -33,7 +33,7 @@ namespace NStructurizr.Core.View
         }
 
         public override String getName() {
-            return getSoftwareSystem().getName() + " - System Context";
+            return getSoftwareSystem().name + " - System Context";
         }
 
         /**

@@ -6,41 +6,42 @@ namespace NStructurizr.Core.Model
     public class SoftwareSystem : Element
     {
 
-        private Location location = Location.Unspecified;
+        private Location _location;
 
-        private ISet<Container> containers = new HashSet<Container>();
+        public Location location
+        {
+            get { return _location; }
+            set
+            {
+                if (value != null)
+                {
+                    this._location = value;
+                }
+                else
+                {
+                    this._location = Location.Unspecified;
+                }
+            }
+        }
+
+        private ISet<Container> _containers = new HashSet<Container>();
+
+        public ISet<Container> containers
+        {
+            get { return new HashSet<Container>(_containers);}
+        }
 
         public SoftwareSystem()
         {
+            _location = Location.Unspecified;
             addTags(Tags.SOFTWARE_SYSTEM);
-        }
-
-        public Location getLocation()
-        {
-            return location;
-        }
-
-        public void setLocation(Location location)
-        {
-            if (location != null)
-            {
-                this.location = location;
-            }
-            else
-            {
-                this.location = Location.Unspecified;
-            }
         }
 
         public void add(Container container)
         {
-            containers.Add(container);
+            _containers.Add(container);
         }
 
-        public ISet<Container> getContainers()
-        {
-            return new HashSet<Container>(containers);
-        }
 
         /**
          * Adds a container with the specified name, description and technology
@@ -62,9 +63,9 @@ namespace NStructurizr.Core.Model
          */
         public Container getContainerWithName(String name)
         {
-            foreach (Container container in getContainers())
+            foreach (Container container in containers)
             {
-                if (container.getName().Equals(name))
+                if (container.name.Equals(name))
                 {
                     return container;
                 }
@@ -79,9 +80,9 @@ namespace NStructurizr.Core.Model
          */
         public Container getContainerWithId(String id)
         {
-            foreach (Container container in getContainers())
+            foreach (Container container in containers)
             {
-                if (container.getId().Equals(id))
+                if (container.id.Equals(id))
                 {
                     return container;
                 }
@@ -126,7 +127,7 @@ namespace NStructurizr.Core.Model
 
         public override String getCanonicalName()
         {
-            return CANONICAL_NAME_SEPARATOR + formatForCanonicalName(getName());
+            return CANONICAL_NAME_SEPARATOR + formatForCanonicalName(name);
         }
 
     }

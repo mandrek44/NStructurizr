@@ -9,12 +9,20 @@ namespace NStructurizr.Core.Model
         public static readonly String CANONICAL_NAME_SEPARATOR = "/";
 
         private Model model;
-        protected String id = "";
+        public String id { get; set; }
 
-        protected String name;
-        protected String description;
+        public virtual String name { get; set; }
+        public String description { get; set; }
 
-        protected ISet<Relationship> relationships = new HashSet<Relationship>();
+        protected ISet<Relationship> _relationships = new HashSet<Relationship>();
+
+        public ISet<Relationship> relationships
+        {
+            get
+            {
+                return new HashSet<Relationship>(_relationships);
+            }
+        }
 
         protected Element()
         {
@@ -32,54 +40,19 @@ namespace NStructurizr.Core.Model
             this.model = model;
         }
 
-        public String getId()
-        {
-            return id;
-        }
-
-        public void setId(String id)
-        {
-            this.id = id;
-        }
-
-        public virtual String getName()
-        {
-            return name;
-        }
-
-        public void setName(String name)
-        {
-            this.name = name;
-        }
-
-        public String getDescription()
-        {
-            return description;
-        }
-
-        public void setDescription(String description)
-        {
-            this.description = description;
-        }
-
         public bool has(Relationship relationship)
         {
-            return relationships.Contains(relationship);
+            return _relationships.Contains(relationship);
         }
 
         public void addRelationship(Relationship relationship)
         {
-            relationships.Add(relationship);
-        }
-
-        public ISet<Relationship> getRelationships()
-        {
-            return new HashSet<Relationship>(relationships);
+            _relationships.Add(relationship);
         }
 
         public override string ToString()
         {
-            return "{" + getId() + " | " + getName() + " | " + getDescription() + "}";
+            return "{" + id + " | " + name + " | " + description + "}";
         }
 
         public abstract ElementType getType();
@@ -192,7 +165,7 @@ namespace NStructurizr.Core.Model
                 return false;
             }
 
-            foreach (Relationship relationship in relationships)
+            foreach (Relationship relationship in _relationships)
             {
                 if (relationship.getDestination().Equals(element))
                 {

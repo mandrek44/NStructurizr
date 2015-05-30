@@ -60,7 +60,7 @@ namespace NStructurizr.Core.Model
 
         public void add(Component component)
         {
-            if (getComponentWithName(component.getName()) == null)
+            if (getComponentWithName(component.name) == null)
             {
                 components.Add(component);
             }
@@ -78,7 +78,7 @@ namespace NStructurizr.Core.Model
                 return null;
             }
 
-            Component component = components.FirstOrDefault(c => name.Equals(c.getName()));
+            Component component = components.FirstOrDefault(c => name.Equals(c.name));
 
             if (component != null)
             {
@@ -115,7 +115,7 @@ namespace NStructurizr.Core.Model
 
         public override String getCanonicalName()
         {
-            return getParent().getCanonicalName() + CANONICAL_NAME_SEPARATOR + formatForCanonicalName(getName());
+            return getParent().getCanonicalName() + CANONICAL_NAME_SEPARATOR + formatForCanonicalName(name);
         }
 
     }

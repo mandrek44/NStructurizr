@@ -69,24 +69,28 @@ namespace NStructurizr.Core.Model
         }
 
 
-        public override String getName()
+        public override String name
         {
-            if (this.name != null)
+            get
             {
-                return base.getName();
+                if (this.name != null)
+                {
+                    return base.name;
+                }
+                else if (this.interfaceType != null)
+                {
+                    return interfaceType.Substring(interfaceType.LastIndexOf(".") + 1);
+                }
+                else if (this.implementationType != null)
+                {
+                    return implementationType.Substring(implementationType.LastIndexOf(".") + 1);
+                }
+                else
+                {
+                    return "";
+                }
             }
-            else if (this.interfaceType != null)
-            {
-                return interfaceType.Substring(interfaceType.LastIndexOf(".") + 1);
-            }
-            else if (this.implementationType != null)
-            {
-                return implementationType.Substring(implementationType.LastIndexOf(".") + 1);
-            }
-            else
-            {
-                return "";
-            }
+            set { base.name = value; }
         }
 
         //TODO: @JsonIgnore
@@ -102,7 +106,7 @@ namespace NStructurizr.Core.Model
 
         public override String getCanonicalName()
         {
-            return getParent().getCanonicalName() + CANONICAL_NAME_SEPARATOR + formatForCanonicalName(getName());
+            return getParent().getCanonicalName() + CANONICAL_NAME_SEPARATOR + formatForCanonicalName(name);
         }
 
     }

@@ -19,7 +19,7 @@ namespace NStructurizr.Core.View
 
         public String getId() {
             if (relationship != null) {
-                return relationship.getId();
+                return relationship.id;
             } else {
                 return this.id;
             }

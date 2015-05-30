@@ -11,25 +11,27 @@ namespace NStructurizr.Core.Model
 
     public abstract class TaggableThing
     {
+        private ISet<String> _tags = new HashSet<string>();
 
-        private ISet<String> tags = new HashSet<string>();
-
-        public String getTags()
+        public String tags
         {
-            if (!this.tags.Any())
+            get
             {
-                return "";
-            }
+                if (!this._tags.Any())
+                {
+                    return "";
+                }
 
-            StringBuilder buf = new StringBuilder();
-            foreach (String tag in tags)
-            {
-                buf.Append(tag);
-                buf.Append(",");
-            }
+                StringBuilder buf = new StringBuilder();
+                foreach (String tag in _tags)
+                {
+                    buf.Append(tag);
+                    buf.Append(",");
+                }
 
-            String tagsAsString = buf.ToString();
-            return tagsAsString.Substring(0, tagsAsString.Length - 1);
+                String tagsAsString = buf.ToString();
+                return tagsAsString.Substring(0, tagsAsString.Length - 1);
+            }
         }
 
         void setTags(String tags)
@@ -39,10 +41,10 @@ namespace NStructurizr.Core.Model
                 return;
             }
 
-            this.tags.Clear();
+            this._tags.Clear();
             foreach (var tag in tags.Split(','))
             {
-                this.tags.Add(tag);
+                this._tags.Add(tag);
             }
         }
 
@@ -57,7 +59,7 @@ namespace NStructurizr.Core.Model
             {
                 if (tag != null)
                 {
-                    this.tags.Add(tag);
+                    this._tags.Add(tag);
                 }
             }
         }

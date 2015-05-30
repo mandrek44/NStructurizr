@@ -6,13 +6,13 @@ namespace NStructurizr.Core.View
 
         private String tag { get; set; }
 
-        private int thickness { get; set; }
+        private int? thickness { get; set; }
 
         private String color { get; set; }
 
-        private int fontSize { get; set; }
+        private int? fontSize { get; set; }
 
-        private int width { get; set; }
+        private int? width { get; set; }
 
         private Boolean dashed { get; set; }
 
@@ -23,7 +23,7 @@ namespace NStructurizr.Core.View
             this.tag = tag;
         }
 
-        public RelationshipStyle(String tag, int thickness, String color, Boolean dashed, int fontSize, int width) {
+        public RelationshipStyle(String tag, int? thickness, String color, Boolean dashed, int? fontSize, int? width) {
             this.tag = tag;
             this.thickness = thickness;
             this.color = color;

@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStructurizr.Core", "nstructurizr.core\NStructurizr.Core.csproj", "{FA3CD54C-CF8F-4059-90E2-C4C604CD3A60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NStructurizr.Examples", "NStructurizr.Examples\NStructurizr.Examples.csproj", "{45DBAF3B-2DBF-4777-9FC4-A75C95256C9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FA3CD54C-CF8F-4059-90E2-C4C604CD3A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA3CD54C-CF8F-4059-90E2-C4C604CD3A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA3CD54C-CF8F-4059-90E2-C4C604CD3A60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45DBAF3B-2DBF-4777-9FC4-A75C95256C9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45DBAF3B-2DBF-4777-9FC4-A75C95256C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45DBAF3B-2DBF-4777-9FC4-A75C95256C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45DBAF3B-2DBF-4777-9FC4-A75C95256C9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
