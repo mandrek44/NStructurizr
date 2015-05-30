@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
@@ -127,7 +128,18 @@ namespace NStructurizr.Core.Client
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
                 addHeaders(client, workspaceJson, "application/json", new Uri(putUrl).AbsolutePath);
-                client.UploadString(putUrl, "PUT", workspaceJson);
+
+                try
+                {
+                    client.UploadString(putUrl, "PUT", workspaceJson);
+                }
+                catch (WebException e)
+                {
+                    using (var streamReader = new StreamReader(e.Response.GetResponseStream()))
+                    {
+                        Console.WriteLine(streamReader.ReadToEnd());
+                    }
+                }
             }
         }
 

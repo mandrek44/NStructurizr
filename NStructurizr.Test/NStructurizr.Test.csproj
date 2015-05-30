@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA3CD54C-CF8F-4059-90E2-C4C604CD3A60}</ProjectGuid>
+    <ProjectGuid>{11C9983A-FA84-4704-A812-8A044B918D4E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NStructurizr.Core</RootNamespace>
-    <AssemblyName>NStructurizr.Core</AssemblyName>
+    <RootNamespace>NStructurizr.Test</RootNamespace>
+    <AssemblyName>NStructurizr.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -29,9 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -43,44 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\HashBasedMessageAuthenticationCode.cs" />
-    <Compile Include="Client\HmacAuthorizationHeader.cs" />
-    <Compile Include="Client\HmacContent.cs" />
-    <Compile Include="Client\Md5Digest.cs" />
-    <Compile Include="Client\StructurizrClient.cs" />
-    <Compile Include="View\ComponentView.cs" />
-    <Compile Include="View\Configuration.cs" />
-    <Compile Include="View\ContainerView.cs" />
-    <Compile Include="View\ElementStyle.cs" />
-    <Compile Include="View\ElementView.cs" />
-    <Compile Include="View\EnumerableExtensions.cs" />
-    <Compile Include="Model\Component.cs" />
-    <Compile Include="Model\Container.cs" />
-    <Compile Include="Model\Element.cs" />
-    <Compile Include="Model\ElementType.cs" />
-    <Compile Include="Model\IdGenerator.cs" />
-    <Compile Include="Model\Location.cs" />
-    <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\Person.cs" />
-    <Compile Include="Model\Relationship.cs" />
-    <Compile Include="Model\SequentialIntegerIdGeneratorStrategy.cs" />
-    <Compile Include="Model\SoftwareSystem.cs" />
-    <Compile Include="Model\Tags.cs" />
-    <Compile Include="Model\TaggableThing.cs" />
-    <Compile Include="View\PaperSize.cs" />
-    <Compile Include="View\RelationshipStyle.cs" />
-    <Compile Include="View\RelationshipView.cs" />
-    <Compile Include="View\Styles.cs" />
-    <Compile Include="View\SystemContextView.cs" />
-    <Compile Include="View\Vertex.cs" />
-    <Compile Include="View\View.cs" />
-    <Compile Include="View\ViewSet.cs" />
-    <Compile Include="View\ViewType.cs" />
-    <Compile Include="Workspace.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Model\packages.config" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nstructurizr.core\NStructurizr.Core.csproj">
+      <Project>{FA3CD54C-CF8F-4059-90E2-C4C604CD3A60}</Project>
+      <Name>NStructurizr.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
