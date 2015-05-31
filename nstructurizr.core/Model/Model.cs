@@ -102,7 +102,7 @@ namespace NStructurizr.Core.Model
             if (getPersonWithName(name) == null)
             {
                 Person person = new Person();
-                person.setLocation(location);
+                person.location = (location);
                 person.name = (name);
                 person.description = (description);
 

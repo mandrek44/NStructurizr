@@ -4,6 +4,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using NStructurizr.Core.View;
 
 namespace NStructurizr.Core.Client
 {
@@ -121,7 +123,13 @@ namespace NStructurizr.Core.Client
                 throw new ArgumentException("The workspace ID must be set");
             }
 
-            var workspaceJson = JsonConvert.SerializeObject(workspace);
+            var settings = new JsonSerializerSettings()
+            {
+                Converters = { new StringEnumConverter(), new PaperSizeJsonConverter() },
+                NullValueHandling = NullValueHandling.Ignore
+            };
+
+            var workspaceJson = JsonConvert.SerializeObject(workspace, settings);
             var putUrl = url + WORKSPACE_PATH + workspace.id;
 
             using (var client = new WebClient())

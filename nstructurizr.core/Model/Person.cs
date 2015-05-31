@@ -5,28 +5,12 @@ namespace NStructurizr.Core.Model
     public class Person : Element
     {
 
-        private Location location = Location.Unspecified;
+        public Location location { get; set; }
 
         public Person()
         {
+            location = Location.Unspecified;
             addTags(Tags.PERSON);
-        }
-
-        public Location getLocation()
-        {
-            return location;
-        }
-
-        public void setLocation(Location location)
-        {
-            if (location != null)
-            {
-                this.location = location;
-            }
-            else
-            {
-                this.location = Location.Unspecified;
-            }
         }
 
         public override ElementType type

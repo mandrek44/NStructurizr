@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using NStructurizr.Core;
 using NStructurizr.Core.Client;
 using NStructurizr.Core.Model;
@@ -71,12 +72,18 @@ namespace NStructurizr.Examples
         viewSet.configuration.styles.add(new RelationshipStyle(TAG_ALERT, null, "#ff0000", false, null, null));
 
         // output the model as JSON
-        var workspaceJson = JsonConvert.SerializeObject(workspace, Formatting.Indented);
+        var settings = new JsonSerializerSettings()
+        {
+            Converters = {new StringEnumConverter(), new PaperSizeJsonConverter()},
+            NullValueHandling = NullValueHandling.Ignore
+        };
+
+        var workspaceJson = JsonConvert.SerializeObject(workspace, Formatting.Indented, settings);
         Console.WriteLine(workspaceJson);
 
         // and upload the model to structurizr.com
-        //StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "27f8fe18-9cb8-4bad-9e59-bd86cf68fbca", "2a20fc62-bd21-4254-9091-77c3b9ccef8d");
-        //structurizrClient.putWorkspace(workspace);
+        StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "27f8fe18-9cb8-4bad-9e59-bd86cf68fbca", "2a20fc62-bd21-4254-9091-77c3b9ccef8d");
+        structurizrClient.putWorkspace(workspace);
 
         Console.ReadKey();
     }

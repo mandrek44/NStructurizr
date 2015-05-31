@@ -48,6 +48,7 @@
     <Compile Include="Client\HmacContent.cs" />
     <Compile Include="Client\Md5Digest.cs" />
     <Compile Include="Client\StructurizrClient.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="View\ComponentView.cs" />
     <Compile Include="View\Configuration.cs" />
     <Compile Include="View\ContainerView.cs" />
