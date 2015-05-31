@@ -194,7 +194,7 @@ namespace NStructurizr.Core.View
             }
         }
 
-        public abstract String getName();
+        public abstract String name { get; }
 
         public int CompareTo(View view) {
             return getTitle().CompareTo(view.getTitle());
@@ -203,9 +203,9 @@ namespace NStructurizr.Core.View
         // TODO: @JsonIgnore
         public String getTitle() {
             if (description != null && description.Trim().Length > 0) {
-                return getName() + " [" + description+ "]";
+                return name + " [" + description+ "]";
             } else {
-                return getName();
+                return name;
             }
         }
 

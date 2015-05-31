@@ -100,8 +100,8 @@ namespace NStructurizr.Core.View
             get { return ViewType.Component; }
         }
 
-        public override String getName() {
-            return getSoftwareSystem().name + " - " + getContainer().name + " - Components";
+        public override String name {
+            get { return getSoftwareSystem().name + " - " + getContainer().name + " - Components"; }
         }
 
         public override void addAllElements() {

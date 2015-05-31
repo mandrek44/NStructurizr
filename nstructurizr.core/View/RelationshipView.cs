@@ -8,7 +8,24 @@ namespace NStructurizr.Core.View
     {
 
         private Relationship relationship;
-        public String id { get; set; }
+        private String _id;
+
+        public String id
+        {
+            get
+            {
+                if (relationship != null)
+                {
+                    return relationship.id;
+                }
+                else
+                {
+                    return this._id;
+                }
+            }
+            set { _id = value; }
+        }
+
         public Collection<Vertex> vertices { get; set; }
 
         RelationshipView()

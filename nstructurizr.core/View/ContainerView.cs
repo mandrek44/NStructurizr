@@ -32,8 +32,8 @@ namespace NStructurizr.Core.View
             get { return ViewType.Container; }
         }
 
-        public override String getName() {
-            return getSoftwareSystem().name + " - Containers";
+        public override String name{
+            get { return getSoftwareSystem().name + " - Containers"; }
         }
 
         public override void addAllElements() {

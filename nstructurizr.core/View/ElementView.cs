@@ -6,7 +6,24 @@ namespace NStructurizr.Core.View
     public class ElementView {
 
         private Element element;
-        public String id { get; set; }
+        private String _id;
+
+        public String id
+        {
+            get
+            {
+                if (element != null)
+                {
+                    return element.id;
+                }
+                else
+                {
+                    return this._id;
+                }
+            }
+            set { _id = value; }
+        }
+
         public int x { get; set; }
         public int y { get; set; }
 
@@ -16,7 +33,6 @@ namespace NStructurizr.Core.View
         }
 
         public ElementView(Element element) {
-            id = string.Empty;
             this.element = element;
         }
 
