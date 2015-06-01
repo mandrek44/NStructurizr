@@ -11,4 +11,4 @@ Current todo list:
  - Support for Container and Component Views
  - Component finders for .NET
  - Coding Standard compliant with .NET standards
- - Automatic checking if it's complaint with Structurizr API
+ - Automatic checking if it's compatibile with Structurizr API
