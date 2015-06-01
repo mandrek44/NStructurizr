@@ -43,18 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\HashBasedMessageAuthenticationCode.cs" />
-    <Compile Include="Client\HmacAuthorizationHeader.cs" />
-    <Compile Include="Client\HmacContent.cs" />
-    <Compile Include="Client\Md5Digest.cs" />
-    <Compile Include="Client\StructurizrClient.cs" />
-    <Compile Include="Utils.cs" />
     <Compile Include="View\ComponentView.cs" />
     <Compile Include="View\Configuration.cs" />
     <Compile Include="View\ContainerView.cs" />
     <Compile Include="View\ElementStyle.cs" />
     <Compile Include="View\ElementView.cs" />
-    <Compile Include="View\EnumerableExtensions.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Model\Component.cs" />
     <Compile Include="Model\Container.cs" />
     <Compile Include="Model\Element.cs" />

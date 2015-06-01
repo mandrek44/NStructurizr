@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NStructurizr.Core.View
+namespace NStructurizr.Core
 {
     public static class EnumerableExtensions
     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NStructurizr.Test")]
+[assembly: AssemblyTitle("NStructurizr.Client")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NStructurizr.Test")]
+[assembly: AssemblyProduct("NStructurizr.Client")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("af48b02a-28fd-477e-ba85-316f0c43dbf4")]
+[assembly: Guid("27ccf725-ad83-46a6-ac65-18609e2d85e3")]
 
 // Version information for an assembly consists of the following four values:
 //

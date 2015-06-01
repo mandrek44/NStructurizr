@@ -4,41 +4,52 @@ using NStructurizr.Core.Model;
 
 namespace NStructurizr.Core.View
 {
-    public class ComponentView : View {
-
+    // TODO: Fix serialization in .NET
+    public class ComponentView : View
+    {
         private Container container;
         private String containerId;
 
-        public ComponentView(Container container, String description) : base(container.getParent(), description) {
+        public ComponentView(Container container, String description)
+            : base(container.getParent(), description)
+        {
 
             this.container = container;
         }
 
-        public String getContainerId() {
-            if (this.container != null) {
+        public String getContainerId()
+        {
+            if (this.container != null)
+            {
                 return container.id;
-            } else {
+            }
+            else
+            {
                 return this.containerId;
             }
         }
 
-        void setContainerId(String containerId) {
+        void setContainerId(String containerId)
+        {
             this.containerId = containerId;
         }
 
         // TODO: @JsonIgnore
-        public Container getContainer() {
+        public Container getContainer()
+        {
             return container;
         }
 
-        public void setContainer(Container container) {
+        public void setContainer(Container container)
+        {
             this.container = container;
         }
 
         /**
      * Adds all software systems in the model to this view.
      */
-        public override void addAllSoftwareSystems() {
+        public override void addAllSoftwareSystems()
+        {
             getModel().softwareSystems
                 .Where(ss => ss != getSoftwareSystem())
                 .ForEach(addElement);
@@ -47,7 +58,8 @@ namespace NStructurizr.Core.View
         /**
      * Adds all containers in the software system to this view.
      */
-        public void addAllContainers() {
+        public void addAllContainers()
+        {
             getSoftwareSystem().containers
                 .Where(c => c != container)
                 .ForEach(addElement);
@@ -56,7 +68,8 @@ namespace NStructurizr.Core.View
         /**
      * Adds all components in the container to this view.
      */
-        public void addAllComponents() {
+        public void addAllComponents()
+        {
             container.getComponents().ForEach(addElement);
         }
 
@@ -65,7 +78,8 @@ namespace NStructurizr.Core.View
      *
      * @param container     the Container to add
      */
-        public void add(Container container) {
+        public void add(Container container)
+        {
             addElement(container);
         }
 
@@ -74,7 +88,8 @@ namespace NStructurizr.Core.View
      *
      * @param component     the Component to add
      */
-        public void add(Component component) {
+        public void add(Component component)
+        {
             addElement(component);
         }
 
@@ -83,7 +98,8 @@ namespace NStructurizr.Core.View
      *
      * @param container     the Container to remove
      */
-        public void remove(Container container) {
+        public void remove(Container container)
+        {
             removeElement(container);
         }
 
@@ -92,24 +108,28 @@ namespace NStructurizr.Core.View
      *
      * @param component     the Component to remove
      */
-        public void remove(Component component) {
+        public void remove(Component component)
+        {
             removeElement(component);
         }
 
-        public override ViewType type {
+        public override ViewType type
+        {
             get { return ViewType.Component; }
         }
 
-        public override String name {
+        public override String name
+        {
             get { return getSoftwareSystem().name + " - " + getContainer().name + " - Components"; }
         }
 
-        public override void addAllElements() {
+        public override void addAllElements()
+        {
             addAllSoftwareSystems();
             addAllPeople();
             addAllContainers();
             addAllComponents();
-//        removeElementsThatCantBeReachedFrom(this.container);
+            //        removeElementsThatCantBeReachedFrom(this.container);
         }
 
     }

@@ -11,12 +11,7 @@ namespace NStructurizr.Core.Client
 {
     public class StructurizrClient
     {
-
         //private static final Log log = LogFactory.getLog(StructurizrClient.class);
-
-        public static readonly String STRUCTURIZR_API_URL = "structurizr.api.url";
-        public static readonly String STRUCTURIZR_API_KEY = "structurizr.api.key";
-        public static readonly String STRUCTURIZR_API_SECRET = "structurizr.api.secret";
 
         private static readonly String WORKSPACE_PATH = "/workspace/";
 
@@ -24,31 +19,7 @@ namespace NStructurizr.Core.Client
         private String apiKey;
         private String apiSecret;
 
-        /**
-         * Creates a new Structurizr client based upon configuration in a structurizr.properties file
-         * on the classpath with the following name-value pairs:
-         * - structurizr.api.url
-         * - structurizr.api.key
-         * - structurizr.api.secret
-         */
-
-        public StructurizrClient()
-        {
-            var properties = new Dictionary<string, string>()
-            {
-                {STRUCTURIZR_API_KEY, "27f8fe18-9cb8-4bad-9e59-bd86cf68fbca"},
-                {STRUCTURIZR_API_SECRET, "2a20fc62-bd21-4254-9091-77c3b9ccef8d"},
-                {STRUCTURIZR_API_URL, "https://api.structurizr.com"}
-            };
-
-            setUrl(properties[STRUCTURIZR_API_URL]);
-            this.apiKey = properties[STRUCTURIZR_API_KEY];
-            this.apiSecret = properties[STRUCTURIZR_API_SECRET];
-        }
-
-        /**
-     * Creates a new Structurizr client with the specified API URL, key and secret.
-     */
+       
         public StructurizrClient(String url, String apiKey, String apiSecret)
         {
             setUrl(url);

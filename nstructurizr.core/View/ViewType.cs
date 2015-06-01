@@ -1,10 +1,9 @@
 namespace NStructurizr.Core.View
 {
-    public enum ViewType {
-
+    public enum ViewType 
+    {
         SystemContext,
         Container,
         Component
-
     }
 }

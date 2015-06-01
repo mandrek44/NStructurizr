@@ -3,13 +3,6 @@ using NStructurizr.Core.View;
 
 namespace NStructurizr.Core
 {
-
-    
-/**
- * These represent paper sizes in pixels at 300dpi.
- */
-
-
     public class Workspace
     {
         public long id { get; set; }
@@ -17,7 +10,6 @@ namespace NStructurizr.Core
         public String description { get; set; }
         public Model.Model model { get; set; }
         public ViewSet views { get; set; }
-
 
         public Workspace(String name, String description)
         {
@@ -33,6 +25,5 @@ namespace NStructurizr.Core
             this.model.hydrate();
             this.views.hydrate();
         }
-
     }
 }

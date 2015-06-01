@@ -5,8 +5,8 @@ using NStructurizr.Core.Model;
 
 namespace NStructurizr.Core.View
 {
-    public abstract class View : IComparable<View> {
-
+    public abstract class View : IComparable<View> 
+    {
         private SoftwareSystem softwareSystem;
         private String _softwareSystemId;
         public String description { get; set; }

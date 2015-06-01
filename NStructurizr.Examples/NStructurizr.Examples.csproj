@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FinancialRiskSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +54,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NStructurizr.Client\NStructurizr.Client.csproj">
+      <Project>{874389ee-8a2b-40d2-93ee-5cccb9b94a47}</Project>
+      <Name>NStructurizr.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\nstructurizr.core\NStructurizr.Core.csproj">
       <Project>{fa3cd54c-cf8f-4059-90e2-c4c604cd3a60}</Project>
       <Name>NStructurizr.Core</Name>
