@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace NStructurizr.Core.Model
 {
@@ -12,15 +14,12 @@ namespace NStructurizr.Core.Model
         private readonly Dictionary<string, Element> elementsById = new Dictionary<string, Element>();
         private readonly Dictionary<string, Relationship> relationshipsById = new Dictionary<string, Relationship>();
 
-        private ISet<Person> _people = new HashSet<Person>();
+        public ICollection<Person> people { get; set; }
 
-        public ISet<Person> people
-        {
-            get {  return new HashSet<Person>(_people);}
-        }
-
+        [JsonProperty(PropertyName = "softwareSystems")]
         private ISet<SoftwareSystem> _softwareSystems = new HashSet<SoftwareSystem>();
 
+        [JsonIgnore]
         public ISet<SoftwareSystem> softwareSystems
         {
             get {  return new HashSet<SoftwareSystem>(_softwareSystems);}
@@ -28,7 +27,7 @@ namespace NStructurizr.Core.Model
 
         public Model()
         {
-
+            people = new HashSet<Person>();
         }
 
         /**
@@ -106,7 +105,7 @@ namespace NStructurizr.Core.Model
                 person.name = (name);
                 person.description = (description);
 
-                _people.Add(person);
+                people.Add(person);
 
                 person.id = (idGenerator.generateId(person));
                 addElementToInternalStructures(person);
@@ -216,7 +215,7 @@ namespace NStructurizr.Core.Model
         public void hydrate()
         {
             // add all of the elements to the model
-            foreach (var person in _people)
+            foreach (var person in people)
             {
                 addElementToInternalStructures(person);
             }
@@ -239,7 +238,7 @@ namespace NStructurizr.Core.Model
             }
 
             // now hydrate the relationships
-            foreach (var person in _people)
+            foreach (var person in people)
             {
                 hydrateRelationships(person);
             }

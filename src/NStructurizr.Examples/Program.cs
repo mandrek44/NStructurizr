@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,9 @@ namespace NStructurizr.Examples
         static void Main(string[] args)
         {
             FinancialRiskSystem.Run();
+            //TechTribesContainers.Run();
+
+            Console.ReadKey();
         }
     }
 }

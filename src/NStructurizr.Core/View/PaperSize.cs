@@ -1,25 +1,10 @@
 using System;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace NStructurizr.Core.View
 {
-    public class PaperSizeJsonConverter : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            writer.WriteValue(((PaperSize)value).jsonName);
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof (PaperSize);
-        }
-    }
+    
 
     public class PaperSize
     {

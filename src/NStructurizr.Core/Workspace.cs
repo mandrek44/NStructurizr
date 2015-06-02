@@ -11,6 +11,11 @@ namespace NStructurizr.Core
         public Model.Model model { get; set; }
         public ViewSet views { get; set; }
 
+        public Workspace()
+        {
+            
+        }
+
         public Workspace(String name, String description)
         {
             model = new Model.Model();

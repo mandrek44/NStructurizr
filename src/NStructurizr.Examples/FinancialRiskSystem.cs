@@ -63,8 +63,10 @@ namespace NStructurizr.Examples
             Console.WriteLine(new JsonSerializer().Serialize(workspace, Formatting.Indented));
             
             // and upload the model to structurizr.com
-            StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "apikey", "secret");
-            structurizrClient.putWorkspace(workspace);
+            StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "api", "secret");
+
+            structurizrClient.mergeWorkspace(1491, workspace);
+            
         }
 
     }

@@ -137,7 +137,8 @@ namespace NStructurizr.Core.View
         public void addRelationships() {
             ISet<Relationship> relationships = new HashSet<Relationship>();
             ISet<Element> elements = new HashSet<Element>(this.elements
-                .Select(e => e.getElement()));
+                .Select(e => e.getElement())
+                .Where(e => e != null));
 
             foreach (var b in elements)
             {

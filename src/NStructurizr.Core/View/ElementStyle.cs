@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace NStructurizr.Core.View
 {
@@ -7,18 +8,28 @@ namespace NStructurizr.Core.View
         public const int DEFAULT_WIDTH = 450;
         public const int DEFAULT_HEIGHT = 300;
 
+        [JsonProperty]
         public String tag { get; private set; }
 
         // TODO: @JsonInclude(value = JsonInclude.Include.NON_NULL) for all fields here
+        [JsonProperty]
         public int? width { get; private set; }
 
+        [JsonProperty]
         public int? height { get; private set; }
 
+        [JsonProperty]
         public String background { get; private set; }
 
+        [JsonProperty]
         public String color { get; private set; }
 
+        [JsonProperty]
         public int? fontSize { get; private set; }
+
+        public ElementStyle()
+        {
+        }
 
         public ElementStyle(String tag)
         {

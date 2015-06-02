@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using NStructurizr.Core.View;
 
 namespace NStructurizr.Core.Client
 {
@@ -54,27 +52,49 @@ namespace NStructurizr.Core.Client
          * @return a Workspace instance
          * @throws Exception    if there are problems related to the network, authorization, JSON deserialization, etc
          */
-        //public Workspace getWorkspace(long workspaceId) throws Exception {
-        //    CloseableHttpClient httpClient = HttpClients.createDefault();
-        //    HttpGet httpGet = new HttpGet(url + WORKSPACE_PATH + workspaceId);
-        //    addHeaders(httpGet, "", "");
-        //    debugRequest(httpGet, "");
-
-        //    try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
-        //        debugResponse(response);
-
-        //        String json = EntityUtils.toString(response.getEntity());
-        //        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-        //            return new JsonReader().read(new StringReader(json));
-        //        } else {
-        //            ApiError apiError = ApiError.parse(json);
-        //            throw new StructurizrClientException(apiError.getMessage());
-        //        }
-        //    }
-        //}
-
-        public class Properties
+        public Workspace getWorkspace(long workspaceId) 
         {
+            using (var client = new WebClient())
+            {
+                var getUrl = url + WORKSPACE_PATH + workspaceId;
+
+                //client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                addHeaders(client, "", "", new Uri(getUrl).AbsolutePath, "GET");
+
+                try
+                {
+                    var response = client.DownloadString(getUrl);
+                    Console.WriteLine(response);
+                    return new JsonSerializer().Deserialize(response);
+                }
+                catch (WebException e)
+                {
+                    using (var streamReader = new StreamReader(e.Response.GetResponseStream()))
+                    {
+                        Console.WriteLine(streamReader.ReadToEnd());
+                    }
+
+                    return null;
+                }
+            }
+
+
+            //CloseableHttpClient httpClient = HttpClients.createDefault();
+            //HttpGet httpGet = new HttpGet(url + WORKSPACE_PATH + workspaceId);
+            //addHeaders(httpGet, "", "");
+            //debugRequest(httpGet, "");
+
+            //try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+            //    debugResponse(response);
+
+            //    String json = EntityUtils.toString(response.getEntity());
+            //    if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            //        return new JsonReader().read(new StringReader(json));
+            //    } else {
+            //        ApiError apiError = ApiError.parse(json);
+            //        throw new StructurizrClientException(apiError.getMessage());
+            //    }
+            //}
         }
 
         /**
@@ -100,7 +120,7 @@ namespace NStructurizr.Core.Client
             using (var client = new WebClient())
             {
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                addHeaders(client, workspaceJson, "application/json", new Uri(putUrl).AbsolutePath);
+                addHeaders(client, workspaceJson, "application/json", new Uri(putUrl).AbsolutePath, "PUT");
 
                 try
                 {
@@ -124,14 +144,16 @@ namespace NStructurizr.Core.Client
          * @param workspace     the new workspace
          * @throws Exception    if you are not allowed to update the workspace with the given ID or there are any network troubles
          */
-        //public void mergeWorkspace(long workspaceId, Workspace workspace) throws Exception {
-        //    Workspace currentWorkspace = getWorkspace(workspaceId);
-        //    if (currentWorkspace != null) {
-        //        workspace.getViews().copyLayoutInformationFrom(currentWorkspace.getViews());
-        //    }
-        //    workspace.setId(workspaceId);
-        //    putWorkspace(workspace);
-        //}
+        public void mergeWorkspace(long workspaceId, Workspace workspace)
+        {
+            Workspace currentWorkspace = getWorkspace(workspaceId);
+            if (currentWorkspace != null)
+            {
+                workspace.views.copyLayoutInformationFrom(currentWorkspace.views);
+            }
+            workspace.id = (workspaceId);
+            putWorkspace(workspace);
+        }
 
         //private void debugRequest(HttpRequestBase httpRequest, String content) {
         //    log.debug(httpRequest.getMethod() + " " + httpRequest.getURI().getPath());
@@ -147,9 +169,9 @@ namespace NStructurizr.Core.Client
         //    log.info(response.getStatusLine());
         //}
 
-        private void addHeaders(WebClient client, String content, string contentType, string urlPath)
+        private void addHeaders(WebClient client, String content, string contentType, string urlPath, string method)
         {
-            String httpMethod = "PUT";
+            String httpMethod = method;
             String path = urlPath;
             String contentMd5 = new Md5Digest().generate(content);
             String nonce = "" + CurrentTimeMillis();

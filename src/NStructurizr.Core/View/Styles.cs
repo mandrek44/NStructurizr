@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 
 namespace NStructurizr.Core.View
 {
@@ -9,7 +10,9 @@ namespace NStructurizr.Core.View
             relationships = new Collection<RelationshipStyle>();
         }
 
+        [JsonProperty]
         public Collection<ElementStyle> elements { get; private set; }
+        [JsonProperty]
         public Collection<RelationshipStyle> relationships { get; private set; }
 
         public Collection<ElementStyle> getElements() {

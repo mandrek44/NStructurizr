@@ -5,8 +5,9 @@ namespace NStructurizr.Core.View
 {
     public class SystemContextView : View {
 
-        //public SystemContextView() {
-        //}
+        public SystemContextView() : this(null, string.Empty)
+        {
+        }
 
         /**
      * Creates a system context view for the given software system.

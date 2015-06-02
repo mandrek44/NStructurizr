@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 using NStructurizr.Core.Model;
 
 namespace NStructurizr.Core.View
@@ -19,6 +20,8 @@ namespace NStructurizr.Core.View
         }
 
         private Styles styles = new Styles();
+
+        [JsonProperty]
         public Configuration configuration { get; private set; }
 
         ViewSet()

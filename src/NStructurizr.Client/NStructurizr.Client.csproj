@@ -50,6 +50,7 @@
     <Compile Include="HmacContent.cs" />
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="Md5Digest.cs" />
+    <Compile Include="PaperSizeJsonConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StructurizrClient.cs" />
   </ItemGroup>

@@ -1,18 +1,21 @@
 using System;
+using Newtonsoft.Json;
 
 namespace NStructurizr.Core.View
 {
     public class RelationshipStyle {
+
+        [JsonProperty]
         public String tag { get; private set; }
-
+        [JsonProperty]
         public int? thickness { get; private set; }
-
+        [JsonProperty]
         public String color { get; private set; }
-
+        [JsonProperty]
         public int? fontSize { get; private set; }
-
+        [JsonProperty]
         public int? width { get; private set; }
-
+        [JsonProperty]
         public Boolean dashed { get; private set; }
 
         public RelationshipStyle() {

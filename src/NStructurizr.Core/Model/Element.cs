@@ -16,8 +16,10 @@ namespace NStructurizr.Core.Model
         public virtual String name { get; set; }
         public String description { get; set; }
 
+        [JsonProperty("relationships")]
         protected ISet<Relationship> _relationships = new HashSet<Relationship>();
 
+        [JsonIgnore]
         public ISet<Relationship> relationships
         {
             get
