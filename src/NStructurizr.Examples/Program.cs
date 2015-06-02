@@ -11,8 +11,8 @@ namespace NStructurizr.Examples
     {
         static void Main(string[] args)
         {
-            FinancialRiskSystem.Run();
-            //TechTribesContainers.Run();
+            //FinancialRiskSystem.Run();
+            TechTribesContainers.Run();
 
             Console.ReadKey();
         }

@@ -1,6 +1,7 @@
 using System;
 using Newtonsoft.Json;
 using NStructurizr.Core;
+using NStructurizr.Core.Client;
 using NStructurizr.Core.Model;
 using NStructurizr.Core.View;
 using JsonSerializer = NStructurizr.Core.Client.JsonSerializer;
@@ -14,7 +15,7 @@ namespace NStructurizr.Examples
             // create a model and the software system we want to describe
             Workspace workspace = new Workspace("techtribes.je",
                 "This is a model of the system context for the techtribes.je system, the code for which can be found at https://github.com/techtribesje/techtribesje");
-            workspace.id = 1491;
+            workspace.id = 1561;
             Model model = workspace.model;
 
             SoftwareSystem techTribes = model.addSoftwareSystem(Location.Internal, "techtribes.je",
@@ -89,6 +90,11 @@ namespace NStructurizr.Examples
 
             // and output the model and view to JSON
             Console.WriteLine(new JsonSerializer().Serialize(workspace, Formatting.Indented));
+
+            // and upload the model to structurizr.com
+            StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "api ", "key");
+
+            structurizrClient.putWorkspace(workspace);
         }
 
     }

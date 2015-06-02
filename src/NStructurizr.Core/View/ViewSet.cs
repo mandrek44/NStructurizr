@@ -11,7 +11,10 @@ namespace NStructurizr.Core.View
         private Model.Model model;
 
         private Collection<SystemContextView> _systemContextViews = new Collection<SystemContextView>();
+
+        [JsonProperty]
         private Collection<ContainerView> containerViews = new Collection<ContainerView>();
+        [JsonProperty]
         private Collection<ComponentView> componentViews = new Collection<ComponentView>();
 
         public Collection<SystemContextView> systemContextViews
