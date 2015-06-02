@@ -94,13 +94,7 @@ namespace NStructurizr.Core.Client
                 throw new ArgumentException("The workspace ID must be set");
             }
 
-            var settings = new JsonSerializerSettings()
-            {
-                Converters = { new StringEnumConverter(), new PaperSizeJsonConverter() },
-                NullValueHandling = NullValueHandling.Ignore
-            };
-
-            var workspaceJson = JsonConvert.SerializeObject(workspace, settings);
+            var workspaceJson = new JsonSerializer().Serialize(workspace);
             var putUrl = url + WORKSPACE_PATH + workspace.id;
 
             using (var client = new WebClient())

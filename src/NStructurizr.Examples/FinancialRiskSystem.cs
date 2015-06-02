@@ -5,6 +5,7 @@ using NStructurizr.Core;
 using NStructurizr.Core.Client;
 using NStructurizr.Core.Model;
 using NStructurizr.Core.View;
+using JsonSerializer = NStructurizr.Core.Client.JsonSerializer;
 
 namespace NStructurizr.Examples
 {
@@ -59,15 +60,8 @@ namespace NStructurizr.Examples
             viewSet.configuration.styles.add(new RelationshipStyle(TAG_ALERT, null, "#ff0000", false, null, null));
 
             // output the model as JSON
-            var settings = new JsonSerializerSettings()
-            {
-                Converters = {new StringEnumConverter(), new PaperSizeJsonConverter()},
-                NullValueHandling = NullValueHandling.Ignore
-            };
-
-            var workspaceJson = JsonConvert.SerializeObject(workspace, Formatting.Indented, settings);
-            Console.WriteLine(workspaceJson);
-
+            Console.WriteLine(new JsonSerializer().Serialize(workspace, Formatting.Indented));
+            
             // and upload the model to structurizr.com
             StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "apikey", "secret");
             structurizrClient.putWorkspace(workspace);
