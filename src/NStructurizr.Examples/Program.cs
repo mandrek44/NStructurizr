@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NStructurizr.Examples
 {
@@ -11,10 +8,24 @@ namespace NStructurizr.Examples
     {
         static void Main(string[] args)
         {
-            //FinancialRiskSystem.Run();
-            TechTribesContainers.Run();
+            var examples = new Dictionary<string, Action>
+            {
+                {"FinancialRiskSystem", FinancialRiskSystem.Run}, 
+                {"TechTribesContainers", TechTribesContainers.Run}
+            };
 
-            Console.ReadKey();
+            if (!args.Any())
+            {
+                Console.WriteLine("Which example to run? (you can pass the name of the example as argument)");
+                Console.WriteLine("Available examples: " + string.Join(", ", examples.Keys));
+                args = new[] {Console.ReadLine()};
+            }
+
+            foreach (var example in examples)
+            {
+                if (args.Contains(example.Key))
+                    example.Value();
+            }
         }
     }
 }
