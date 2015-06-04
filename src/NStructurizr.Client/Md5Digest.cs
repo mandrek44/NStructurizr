@@ -2,16 +2,14 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace NStructurizr.Core.Client
+namespace NStructurizr.Client
 {
-    public class Md5Digest {
-
-        private static readonly String ALGORITHM = "MD5";
-
-        public String generate(String content) {
-            if (content == null) {
+    public class Md5Digest 
+    {
+        public string Generate(string content) 
+        {
+            if (content == null)
                 content = "";
-            }
 
             return GetMd5Hash(content);
         }
@@ -20,12 +18,9 @@ namespace NStructurizr.Core.Client
         {
             using (var md5Hash = MD5.Create())
             {
-                // Convert the input string to a byte array and compute the hash. 
                 byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
                 return BitConverter.ToString(data).Replace("-", string.Empty).ToLower();
             }
         }
-
     }
 }

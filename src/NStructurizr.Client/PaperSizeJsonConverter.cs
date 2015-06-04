@@ -3,7 +3,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using NStructurizr.Core.View;
 
-namespace NStructurizr.Core.Client
+namespace NStructurizr.Client
 {
     public class PaperSizeJsonConverter : JsonConverter
     {

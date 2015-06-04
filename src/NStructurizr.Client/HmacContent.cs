@@ -1,29 +1,27 @@
 using System;
 using System.Text;
 
-namespace NStructurizr.Core.Client
+namespace NStructurizr.Client
 {
     public class HmacContent
     {
+        private string[] strings;
 
-        private String[] strings;
-
-        public HmacContent(params String[] strings)
+        public HmacContent(params string[] strings)
         {
             this.strings = strings;
         }
 
         public override String ToString()
         {
-            StringBuilder buf = new StringBuilder();
-            foreach (String s in strings)
+            var buffer = new StringBuilder();
+            foreach (string s in strings)
             {
-                buf.Append(s);
-                buf.Append("\n");
+                buffer.Append(s);
+                buffer.Append("\n");
             }
 
-            return buf.ToString();
+            return buffer.ToString();
         }
-
     }
 }

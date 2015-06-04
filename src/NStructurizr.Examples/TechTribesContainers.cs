@@ -1,10 +1,10 @@
 using System;
 using Newtonsoft.Json;
+using NStructurizr.Client;
 using NStructurizr.Core;
-using NStructurizr.Core.Client;
 using NStructurizr.Core.Model;
 using NStructurizr.Core.View;
-using JsonSerializer = NStructurizr.Core.Client.JsonSerializer;
+using JsonSerializer = NStructurizr.Client.JsonSerializer;
 
 namespace NStructurizr.Examples
 {
@@ -94,7 +94,7 @@ namespace NStructurizr.Examples
             // and upload the model to structurizr.com
             StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "api ", "key");
 
-            structurizrClient.putWorkspace(workspace);
+            structurizrClient.PutWorkspace(workspace);
         }
 
     }

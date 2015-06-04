@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using NStructurizr.Core.View;
+using NStructurizr.Core;
 
-namespace NStructurizr.Core.Client
+namespace NStructurizr.Client
 {
     public class JsonSerializer
     {
-        private readonly JsonSerializerSettings _settings = new JsonSerializerSettings()
+        private readonly JsonSerializerSettings settings = new JsonSerializerSettings()
         {
             Converters = { new StringEnumConverter(), new PaperSizeJsonConverter() },
             NullValueHandling = NullValueHandling.Ignore
@@ -14,12 +14,12 @@ namespace NStructurizr.Core.Client
 
         public string Serialize(Workspace workspace, Formatting formatting = Formatting.None)
         {
-            return JsonConvert.SerializeObject(workspace, formatting, _settings);
+            return JsonConvert.SerializeObject(workspace, formatting, this.settings);
         }
 
         public Workspace Deserialize(string response)
         {
-            var workspace = JsonConvert.DeserializeObject<Workspace>(response, _settings);
+            var workspace = JsonConvert.DeserializeObject<Workspace>(response, this.settings);
             workspace.hydrate();
 
             return workspace;

@@ -1,42 +1,31 @@
 using System;
 using System.Text;
 
-namespace NStructurizr.Core.Client
+namespace NStructurizr.Client
 {
     public class HmacAuthorizationHeader
     {
-
-        private String apiKey;
-        private String hmac;
+        public string ApiKey { get; private set; }
+        public string Hmac { get; private set; }
 
         public HmacAuthorizationHeader(String apiKey, String hmac)
         {
-            this.apiKey = apiKey;
-            this.hmac = hmac;
+            ApiKey = apiKey;
+            Hmac = hmac;
         }
 
-        public String getApiKey()
+        public string Format()
         {
-            return apiKey;
+            return ApiKey + ":" + Convert.ToBase64String(Encoding.UTF8.GetBytes(Hmac));
         }
 
-        public String getHmac()
+        public static HmacAuthorizationHeader Parse(string s)
         {
-            return hmac;
-        }
-
-        public String format()
-        {
-            return apiKey + ":" + Convert.ToBase64String(Encoding.UTF8.GetBytes(hmac));
-        }
-
-        public static HmacAuthorizationHeader parse(String s)
-        {
-            String apiKey = s.Split(':')[0];
-            String hmac = Encoding.UTF8.GetString(Convert.FromBase64String(s.Split(':')[1]));
+            var strings = s.Split(':');
+            string apiKey = strings[0];
+            string hmac = Encoding.UTF8.GetString(Convert.FromBase64String(strings[1]));
 
             return new HmacAuthorizationHeader(apiKey, hmac);
         }
-
     }
 }
