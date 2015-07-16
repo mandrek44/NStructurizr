@@ -11,7 +11,7 @@ namespace NStructurizr.Core.Attributes
         public static void FillContainerComponents(Container parentElement, Assembly assembly, Func<Type, bool> typePredicate = null)
         {
             var components = FindComponents(parentElement, assembly, typePredicate);
-            var dependencies = components.SelectMany(component => FindComponentDependencies(component, components));
+            var dependencies = components.SelectMany(component => FindComponentFieldDependencies(component, components));
 
             foreach (var dependency in dependencies)
                 dependency.Parent.Uses(dependency.Child, string.Empty);
@@ -28,7 +28,7 @@ namespace NStructurizr.Core.Attributes
                 .ToArray();
         }
 
-        private static IEnumerable<ComponentDependency> FindComponentDependencies(Component parent, IEnumerable<Component> allComponents)
+        private static IEnumerable<ComponentDependency> FindComponentFieldDependencies(Component parent, IEnumerable<Component> allComponents)
         {
             return parent.GetType().GetFields()
                 .Where(field => IsComponentType(field.FieldType))

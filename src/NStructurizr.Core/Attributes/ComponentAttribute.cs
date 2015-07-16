@@ -2,7 +2,7 @@
 
 namespace NStructurizr.Core.Attributes
 {
-    public class Component : Attribute
+    public class ComponentAttribute : Attribute
     {
     }
 }
