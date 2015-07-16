@@ -14,7 +14,17 @@ namespace NStructurizr.Client
         private string url;
         private string apiKey;
         private string apiSecret;
-       
+
+        public StructurizrClient()
+        {
+            ReadFromAppConfig();
+        }
+
+        private void ReadFromAppConfig()
+        {
+            
+        }
+
         public StructurizrClient(string url, string apiKey, string apiSecret)
         {
             Url = url;

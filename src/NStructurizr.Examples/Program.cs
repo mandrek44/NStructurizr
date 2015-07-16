@@ -21,10 +21,9 @@ namespace NStructurizr.Examples
                 args = new[] {Console.ReadLine()};
             }
 
-            foreach (var example in examples)
+            foreach (var example in examples.Where(example => args.Contains(example.Key)))
             {
-                if (args.Contains(example.Key))
-                    example.Value();
+                example.Value();
             }
         }
     }

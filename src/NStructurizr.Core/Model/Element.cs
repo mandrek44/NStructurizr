@@ -76,7 +76,7 @@ namespace NStructurizr.Core.Model
          * @param destination   the target of the relationship
          * @param description   a description of the relationship (e.g. "uses", "gets data from", "sends data to")
          */
-        public Relationship uses(SoftwareSystem destination, String description)
+        public Relationship Uses(SoftwareSystem destination, String description)
         {
             Relationship relationship = new Relationship(this, destination, description);
             getModel().addRelationship(relationship);
@@ -92,7 +92,7 @@ namespace NStructurizr.Core.Model
          * @param description   a description of the relationship (e.g. "uses", "gets data from", "sends data to")
          * @param technology    the technology details (e.g. JSON/HTTPS)
          */
-        public Relationship uses(SoftwareSystem destination, String description, String technology)
+        public Relationship Uses(SoftwareSystem destination, String description, String technology)
         {
             Relationship relationship = new Relationship(this, destination, description, technology);
             getModel().addRelationship(relationship);
@@ -107,7 +107,7 @@ namespace NStructurizr.Core.Model
          * @param destination   the target of the relationship
          * @param description   a description of the relationship (e.g. "uses", "gets data from", "sends data to")
          */
-        public Relationship uses(Container destination, String description)
+        public Relationship Uses(Container destination, String description)
         {
             Relationship relationship = new Relationship(this, destination, description);
             getModel().addRelationship(relationship);
@@ -123,7 +123,7 @@ namespace NStructurizr.Core.Model
          * @param description   a description of the relationship (e.g. "uses", "gets data from", "sends data to")
          * @param technology    the technology details (e.g. JSON/HTTPS)
          */
-        public Relationship uses(Container destination, String description, String technology)
+        public Relationship Uses(Container destination, String description, String technology)
         {
             Relationship relationship = new Relationship(this, destination, description, technology);
             getModel().addRelationship(relationship);
@@ -138,7 +138,7 @@ namespace NStructurizr.Core.Model
          * @param destination   the target of the relationship
          * @param description   a description of the relationship (e.g. "uses", "gets data from", "sends data to")
          */
-        public Relationship uses(Component destination, String description)
+        public Relationship Uses(Component destination, String description)
         {
             Relationship relationship = new Relationship(this, destination, description);
             getModel().addRelationship(relationship);
@@ -154,7 +154,7 @@ namespace NStructurizr.Core.Model
          * @param description   a description of the relationship (e.g. "uses", "gets data from", "sends data to")
          * @param technology    the technology details (e.g. JSON/HTTPS)
          */
-        public Relationship uses(Component destination, String description, String technology)
+        public Relationship Uses(Component destination, String description, String technology)
         {
             Relationship relationship = new Relationship(this, destination, description, technology);
             getModel().addRelationship(relationship);

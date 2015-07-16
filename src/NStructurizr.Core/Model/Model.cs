@@ -38,9 +38,9 @@ namespace NStructurizr.Core.Model
          * @param description   a short description of the software system
          * @return  the SoftwareSystem instance created and added to the model (or null)
          */
-        public SoftwareSystem addSoftwareSystem(String name, String description)
+        public SoftwareSystem AddSoftwareSystem(String name, String description)
         {
-            return addSoftwareSystem(Location.Unspecified, name, description);
+            return AddSoftwareSystem(Location.Unspecified, name, description);
         }
 
         /**
@@ -52,7 +52,7 @@ namespace NStructurizr.Core.Model
          * @param description   a short description of the software system
          * @return  the SoftwareSystem instance created and added to the model (or null)
          */
-        public SoftwareSystem addSoftwareSystem(Location location, String name, String description)
+        public SoftwareSystem AddSoftwareSystem(Location location, String name, String description)
         {
             if (getSoftwareSystemWithName(name) == null)
             {
@@ -82,9 +82,9 @@ namespace NStructurizr.Core.Model
          * @param description   a short description of the person
          * @return  the Person instance created and added to the model (or null)
          */
-        public Person addPerson(String name, String description)
+        public Person AddPerson(String name, String description)
         {
-            return addPerson(Location.Unspecified, name, description);
+            return AddPerson(Location.Unspecified, name, description);
         }
 
         /**
@@ -96,7 +96,7 @@ namespace NStructurizr.Core.Model
          * @param description   a short description of the person
          * @return  the Person instance created and added to the model (or null)
          */
-        public Person addPerson(Location location, String name, String description)
+        public Person AddPerson(Location location, String name, String description)
         {
             if (getPersonWithName(name) == null)
             {
