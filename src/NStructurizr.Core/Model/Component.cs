@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace NStructurizr.Core.Model
 {
@@ -11,6 +12,9 @@ namespace NStructurizr.Core.Model
         public String interfaceType { get; set; }
         public String implementationType { get; set; }
         public String sourcePath { get; set; }
+
+        [JsonIgnore]
+        public Type ImplementingType { get; set; }
 
         public Component()
         {

@@ -30,9 +30,9 @@ namespace NStructurizr.Core.Attributes
 
         private static IEnumerable<ComponentDependency> FindComponentFieldDependencies(Component parent, IEnumerable<Component> allComponents)
         {
-            return parent.GetType().GetFields()
-                .Where(field => IsComponentType(field.FieldType))
-                .Select(field => CreateComponent(field.FieldType, parent.getParent()))
+            return parent.ImplementingType.GetProperties()
+                .Where(field => IsComponentType(field.PropertyType))
+                .Select(field => CreateComponent(field.PropertyType, parent.getParent()))
                 .Select(temporaryComponent => allComponents.FirstOrDefault(component => component.Equals(temporaryComponent)))
                 .Where(component => component != null)
                 .Select(component => new ComponentDependency { Parent = parent, Child = component });
@@ -40,7 +40,9 @@ namespace NStructurizr.Core.Attributes
 
         private static Component CreateComponent(Type type, Container parentElement)
         {
-            return parentElement.addComponent(type.Name, string.Empty);
+            var component = parentElement.addComponent(type.Name, string.Empty);
+            component.ImplementingType = type;
+            return component;
         }
 
         private static bool IsComponentType(Type type)

@@ -4,13 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FA3CD54C-CF8F-4059-90E2-C4C604CD3A60}</ProjectGuid>
+    <ProjectGuid>{B7636AA9-7BAC-4694-A293-78B79F19AF85}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NStructurizr.Core</RootNamespace>
-    <AssemblyName>NStructurizr.Core</AssemblyName>
+    <RootNamespace>NStructurizr.Tests</RootNamespace>
+    <AssemblyName>NStructurizr.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -43,43 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\ComponentAttribute.cs" />
-    <Compile Include="Attributes\AttributeComponentsFinder.cs" />
-    <Compile Include="View\ComponentView.cs" />
-    <Compile Include="View\Configuration.cs" />
-    <Compile Include="View\ContainerView.cs" />
-    <Compile Include="View\ElementStyle.cs" />
-    <Compile Include="View\ElementView.cs" />
-    <Compile Include="EnumerableExtensions.cs" />
-    <Compile Include="Model\Component.cs" />
-    <Compile Include="Model\Container.cs" />
-    <Compile Include="Model\Element.cs" />
-    <Compile Include="Model\ElementType.cs" />
-    <Compile Include="Model\IdGenerator.cs" />
-    <Compile Include="Model\Location.cs" />
-    <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\Person.cs" />
-    <Compile Include="Model\Relationship.cs" />
-    <Compile Include="Model\SequentialIntegerIdGeneratorStrategy.cs" />
-    <Compile Include="Model\SoftwareSystem.cs" />
-    <Compile Include="Model\Tags.cs" />
-    <Compile Include="Model\TaggableThing.cs" />
-    <Compile Include="View\PaperSize.cs" />
-    <Compile Include="View\RelationshipStyle.cs" />
-    <Compile Include="View\RelationshipView.cs" />
-    <Compile Include="View\Styles.cs" />
-    <Compile Include="View\SystemContextView.cs" />
-    <Compile Include="View\Vertex.cs" />
-    <Compile Include="View\View.cs" />
-    <Compile Include="View\ViewSet.cs" />
-    <Compile Include="View\ViewType.cs" />
-    <Compile Include="Workspace.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Model\packages.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nstructurizr.core\NStructurizr.Core.csproj">
+      <Project>{FA3CD54C-CF8F-4059-90E2-C4C604CD3A60}</Project>
+      <Name>NStructurizr.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
