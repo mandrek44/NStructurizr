@@ -66,7 +66,7 @@ namespace NStructurizr.Core.View
         /**
      * Adds all software systems in the model to this view.
      */
-        public virtual void addAllSoftwareSystems() {
+        public virtual void AddAllSoftwareSystems() {
             foreach (var system in getModel().softwareSystems)
             {
                 addElement(system);
@@ -85,7 +85,7 @@ namespace NStructurizr.Core.View
         /**
      * Adds all software systems in the model to this view.
      */
-        public void addAllPeople() {
+        public void AddAllPeople() {
             foreach (var person in getModel().people)
             {
                 addElement(person);

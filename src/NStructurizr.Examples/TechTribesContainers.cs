@@ -18,30 +18,30 @@ namespace NStructurizr.Examples
             workspace.id = 1561;
             Model model = workspace.model;
 
-            SoftwareSystem techTribes = model.addSoftwareSystem(Location.Internal, "techtribes.je",
+            SoftwareSystem techTribes = model.AddSoftwareSystem(Location.Internal, "techtribes.je",
                 "techtribes.je is the only way to keep up to date with the IT, tech and digital sector in Jersey and Guernsey, Channel Islands");
 
             // create the various types of people (roles) that use the software system
-            Person anonymousUser = model.addPerson(Location.External, "Anonymous User", "Anybody on the web.");
-            anonymousUser.uses(techTribes,
+            Person anonymousUser = model.AddPerson(Location.External, "Anonymous User", "Anybody on the web.");
+            anonymousUser.Uses(techTribes,
                 "View people, tribes (businesses, communities and interest groups), content, events, jobs, etc from the local tech, digital and IT sector.");
 
-            Person authenticatedUser = model.addPerson(Location.External, "Aggregated User",
+            Person authenticatedUser = model.AddPerson(Location.External, "Aggregated User",
                 "A user or business with content that is aggregated into the website.");
-            authenticatedUser.uses(techTribes, "Manage user profile and tribe membership.");
+            authenticatedUser.Uses(techTribes, "Manage user profile and tribe membership.");
 
-            Person adminUser = model.addPerson(Location.External, "Administration User", "A system administration user.");
-            adminUser.uses(techTribes, "Add people, add tribes and manage tribe membership.");
+            Person adminUser = model.AddPerson(Location.External, "Administration User", "A system administration user.");
+            adminUser.Uses(techTribes, "Add people, add tribes and manage tribe membership.");
 
             // create the various software systems that techtribes.je has a dependency on
-            SoftwareSystem twitter = model.addSoftwareSystem(Location.External, "Twitter", "twitter.com");
-            techTribes.uses(twitter, "Gets profile information and tweets from.");
+            SoftwareSystem twitter = model.AddSoftwareSystem(Location.External, "Twitter", "twitter.com");
+            techTribes.Uses(twitter, "Gets profile information and tweets from.");
 
-            SoftwareSystem gitHub = model.addSoftwareSystem(Location.External, "GitHub", "github.com");
-            techTribes.uses(gitHub, "Gets information about public code repositories from.");
+            SoftwareSystem gitHub = model.AddSoftwareSystem(Location.External, "GitHub", "github.com");
+            techTribes.Uses(gitHub, "Gets information about public code repositories from.");
 
-            SoftwareSystem blogs = model.addSoftwareSystem(Location.External, "Blogs", "RSS and Atom feeds");
-            techTribes.uses(blogs, "Gets content using RSS and Atom feeds from.");
+            SoftwareSystem blogs = model.AddSoftwareSystem(Location.External, "Blogs", "RSS and Atom feeds");
+            techTribes.Uses(blogs, "Gets content using RSS and Atom feeds from.");
 
             // create the containers that techtribes.je is made up from
             Container webApplication = techTribes.addContainer("Web Application",
@@ -57,42 +57,52 @@ namespace NStructurizr.Examples
                 "Stores content from RSS/Atom feeds (blog posts) and tweets.", "MongoDB 2.2.x");
             Container fileSystem = techTribes.addContainer("File System", "Stores search indexes.", null);
 
-            anonymousUser.uses(webApplication,
+            Component test = webApplication.addComponent("TestComponent", "test component");
+            Component test2 = webApplication.addComponent("TestComponent2", "test component 2");
+
+            test.Uses(test2, "calls");
+            
+
+            anonymousUser.Uses(webApplication,
                 "View people, tribes (businesses, communities and interest groups), content, events, jobs, etc from the local tech, digital and IT sector.");
-            authenticatedUser.uses(webApplication, "Manage user profile and tribe membership.");
-            adminUser.uses(webApplication, "Add people, add tribes and manage tribe membership.");
+            authenticatedUser.Uses(webApplication, "Manage user profile and tribe membership.");
+            adminUser.Uses(webApplication, "Add people, add tribes and manage tribe membership.");
 
-            webApplication.uses(relationalDatabase, "Reads from and writes data to");
-            webApplication.uses(noSqlStore, "Reads from");
-            webApplication.uses(fileSystem, "Reads from");
+            webApplication.Uses(relationalDatabase, "Reads from and writes data to");
+            webApplication.Uses(noSqlStore, "Reads from");
+            webApplication.Uses(fileSystem, "Reads from");
 
-            contentUpdater.uses(relationalDatabase, "Reads from and writes data to");
-            contentUpdater.uses(noSqlStore, "Reads from and writes data to");
-            contentUpdater.uses(fileSystem, "Writes to");
-            contentUpdater.uses(twitter, "Gets profile information and recent tweets using the REST API from.",
+            contentUpdater.Uses(relationalDatabase, "Reads from and writes data to");
+            contentUpdater.Uses(noSqlStore, "Reads from and writes data to");
+            contentUpdater.Uses(fileSystem, "Writes to");
+            contentUpdater.Uses(twitter, "Gets profile information and recent tweets using the REST API from.",
                 "JSON over HTTPS");
-            contentUpdater.uses(twitter, "Subscribes to tweets using the Twitter Streaming API from.", "JSON over HTTPS");
-            contentUpdater.uses(gitHub, "Gets information about public code repositories using the GitHub API from.",
+            contentUpdater.Uses(twitter, "Subscribes to tweets using the Twitter Streaming API from.", "JSON over HTTPS");
+            contentUpdater.Uses(gitHub, "Gets information about public code repositories using the GitHub API from.",
                 "JSON over HTTPS");
-            contentUpdater.uses(blogs, "Gets blog posts and news from.", "RSS and Atom over HTTP");
+            contentUpdater.Uses(blogs, "Gets blog posts and news from.", "RSS and Atom over HTTP");
 
             // now create the system context view based upon the model
             ViewSet viewSet = workspace.views;
             SystemContextView contextView = viewSet.createContextView(techTribes);
-            contextView.addAllSoftwareSystems();
-            contextView.addAllPeople();
+            contextView.AddAllSoftwareSystems();
+            contextView.AddAllPeople();
 
             // and the container view
             ContainerView containerView = viewSet.createContainerView(techTribes);
-            containerView.addAllSoftwareSystems();
-            containerView.addAllPeople();
+            containerView.AddAllSoftwareSystems();
+            containerView.AddAllPeople();
             containerView.addAllContainers();
+
+            var componentView = viewSet.createComponentView(webApplication);
+            componentView.addAllComponents();
+
 
             // and output the model and view to JSON
             Console.WriteLine(new JsonSerializer().Serialize(workspace, Formatting.Indented));
 
             // and upload the model to structurizr.com
-            StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "api ", "key");
+            StructurizrClient structurizrClient = new StructurizrClient("https://api.structurizr.com", "api", "key");
 
             structurizrClient.PutWorkspace(workspace);
         }

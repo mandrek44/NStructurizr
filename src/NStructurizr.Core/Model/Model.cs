@@ -228,7 +228,7 @@ namespace NStructurizr.Core.Model
                     softwareSystem.add(container);
                     addElementToInternalStructures(container);
                     container.setParent(softwareSystem);
-                    foreach (Component component in container.getComponents())
+                    foreach (Component component in container.components)
                     {
                         container.add(component);
                         addElementToInternalStructures(component);
@@ -249,7 +249,7 @@ namespace NStructurizr.Core.Model
                 foreach (Container container in softwareSystem.containers)
                 {
                     hydrateRelationships(container);
-                    foreach (Component component in container.getComponents())
+                    foreach (Component component in container.components)
                     {
                         hydrateRelationships(component);
                     }

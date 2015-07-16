@@ -8,7 +8,7 @@ namespace NStructurizr.Core.View
     public class ComponentView : View
     {
         private Container container;
-        private String containerId;
+        private String _containerId;
 
         public ComponentView(Container container, String description)
             : base(container.getParent(), description)
@@ -17,21 +17,23 @@ namespace NStructurizr.Core.View
             this.container = container;
         }
 
-        public String getContainerId()
+        public string containerId
         {
-            if (this.container != null)
+            get
             {
-                return container.id;
+                if (this.container != null)
+                {
+                    return container.id;
+                }
+                else
+                {
+                    return this._containerId;
+                }
             }
-            else
+            set
             {
-                return this.containerId;
+                this._containerId = value;
             }
-        }
-
-        void setContainerId(String containerId)
-        {
-            this.containerId = containerId;
         }
 
         // TODO: @JsonIgnore
@@ -70,7 +72,7 @@ namespace NStructurizr.Core.View
      */
         public void addAllComponents()
         {
-            container.getComponents().ForEach(addElement);
+            container.components.ForEach(addElement);
         }
 
         /**

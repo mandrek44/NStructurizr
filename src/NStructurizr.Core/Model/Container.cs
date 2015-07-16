@@ -10,7 +10,13 @@ namespace NStructurizr.Core.Model
         private SoftwareSystem parent;
         public String technology { get; set; }
 
-        private ISet<Component> components = new HashSet<Component>();
+        private ISet<Component> _components = new HashSet<Component>();
+
+        public ISet<Component> components
+        {
+            get { return _components; }
+        }
+
 
         public Container()
         {
@@ -52,13 +58,8 @@ namespace NStructurizr.Core.Model
         {
             if (getComponentWithName(component.name) == null)
             {
-                components.Add(component);
+                _components.Add(component);
             }
-        }
-
-        public ISet<Component> getComponents()
-        {
-            return components;
         }
 
         public Component getComponentWithName(String name)
@@ -68,7 +69,7 @@ namespace NStructurizr.Core.Model
                 return null;
             }
 
-            Component component = components.FirstOrDefault(c => name.Equals(c.name));
+            Component component = _components.FirstOrDefault(c => name.Equals(c.name));
 
             if (component != null)
             {
@@ -87,14 +88,14 @@ namespace NStructurizr.Core.Model
                 return null;
             }
 
-            Component component = components.FirstOrDefault(c => type.Equals(c.interfaceType));
+            Component component = _components.FirstOrDefault(c => type.Equals(c.interfaceType));
 
             if (component != null)
             {
                 return component;
             }
 
-            component = components.FirstOrDefault(c => type.Equals(c.implementationType));
+            component = _components.FirstOrDefault(c => type.Equals(c.implementationType));
             return component;
         }
 

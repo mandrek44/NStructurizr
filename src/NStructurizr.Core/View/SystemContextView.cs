@@ -41,8 +41,8 @@ namespace NStructurizr.Core.View
      * Adds all software systems and all people to this view.
      */
         public override void addAllElements() {
-            addAllSoftwareSystems();
-            addAllPeople();
+            AddAllSoftwareSystems();
+            AddAllPeople();
         }
 
     }

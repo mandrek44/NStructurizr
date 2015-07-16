@@ -105,7 +105,7 @@ namespace NStructurizr.Core.View
             foreach (ComponentView view in componentViews)
             {
                 hydrateView(view);
-                view.setContainer(view.getSoftwareSystem().getContainerWithId(view.getContainerId()));
+                view.setContainer(view.getSoftwareSystem().getContainerWithId(view.containerId));
             }
         }
 

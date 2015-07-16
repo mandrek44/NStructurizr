@@ -32,7 +32,7 @@ namespace NStructurizr.Core.Model
         {
             get
             {
-                if (this.name != null)
+                if (base.name != null)
                 {
                     return base.name;
                 }

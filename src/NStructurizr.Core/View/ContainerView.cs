@@ -15,7 +15,7 @@ namespace NStructurizr.Core.View
         /**
      * Adds all software systems in the model to this view.
      */
-        public override void addAllSoftwareSystems()
+        public override void AddAllSoftwareSystems()
         {
             getModel().softwareSystems
                 .Where(ss => ss != getSoftwareSystem())
@@ -42,8 +42,8 @@ namespace NStructurizr.Core.View
 
         public override void addAllElements()
         {
-            addAllSoftwareSystems();
-            addAllPeople();
+            AddAllSoftwareSystems();
+            AddAllPeople();
             addAllContainers();
         }
     }
