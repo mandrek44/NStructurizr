@@ -10,38 +10,37 @@ namespace NStructurizr.Core.Attributes
     {
         public static void FillContainerComponents(Container parentElement, Assembly assembly, Func<Type, bool> typePredicate = null)
         {
-            var components = FindComponents(parentElement, assembly, typePredicate);
-            var dependencies = components.SelectMany(component => FindComponentFieldDependencies(component, components));
-
-            foreach (var dependency in dependencies)
-                dependency.Parent.Uses(dependency.Child, string.Empty);
-        }
-
-        private static Component[] FindComponents(Container parentElement, Assembly assembly, Func<Type, bool> typePredicate = null)
-        {
             typePredicate = typePredicate ?? (type => true);
 
+            var componentTypes = FindComponentTypes(assembly, typePredicate);
+            var components = componentTypes.ToDictionary(type => type, type => CreateComponent(type, parentElement));
+
+            componentTypes
+                .SelectMany(type => FindTypeFieldDependencies(type, typePredicate))
+                .Distinct()
+                .ForEach(d => components[d.Parent].Uses(components[d.Child], string.Empty));
+        }
+
+        private static Type[] FindComponentTypes(Assembly assembly, Func<Type, bool> typePredicate)
+        {
             return assembly.GetTypes()
                 .Where(typePredicate)
                 .Where(IsComponentType)
-                .Select(type => CreateComponent(type, parentElement))
                 .ToArray();
         }
 
-        private static IEnumerable<ComponentDependency> FindComponentFieldDependencies(Component parent, IEnumerable<Component> allComponents)
+        private static IEnumerable<TypeDependency> FindTypeFieldDependencies(Type parent, Func<Type, bool> typePredicate)
         {
-            return parent.ImplementingType.GetProperties()
-                .Where(field => IsComponentType(field.PropertyType))
-                .Select(field => CreateComponent(field.PropertyType, parent.getParent()))
-                .Select(temporaryComponent => allComponents.FirstOrDefault(component => component.Equals(temporaryComponent)))
-                .Where(component => component != null)
-                .Select(component => new ComponentDependency { Parent = parent, Child = component });
+            return parent.GetProperties()
+                .Where(property => typePredicate(property.PropertyType) && IsComponentType(property.PropertyType))
+                .Select(property => new TypeDependency {Parent = parent, Child = property.PropertyType});
         }
 
         private static Component CreateComponent(Type type, Container parentElement)
         {
             var component = parentElement.addComponent(type.Name, string.Empty);
             component.ImplementingType = type;
+
             return component;
         }
 
@@ -50,11 +49,35 @@ namespace NStructurizr.Core.Attributes
             return type.CustomAttributes.Any(a => a.AttributeType == typeof(ComponentAttribute));
         }
 
-        private sealed class ComponentDependency
+        private struct TypeDependency
         {
-            public Component Parent { get; set; }
+            public Type Parent { get; set; }
 
-            public Component Child { get; set; }
+            public Type Child { get; set; }
+
+            public bool Equals(TypeDependency other)
+            {
+                return Parent == other.Parent && Child == other.Child;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                return obj is TypeDependency && Equals((TypeDependency) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return ((Parent != null ? Parent.GetHashCode() : 0)*397) ^ (Child != null ? Child.GetHashCode() : 0);
+                }
+            }
+
+            public override string ToString()
+            {
+                return string.Format("Parent: {0}, Child: {1}", Parent, Child);
+            }
         }
     }
 }

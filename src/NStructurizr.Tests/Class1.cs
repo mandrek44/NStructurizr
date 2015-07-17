@@ -69,5 +69,32 @@ namespace NStructurizr.Tests
             {
             }
         }
+
+        public class GivenDoublePropertyDependency : DependencyTestsBase
+        {
+            [Test]
+            public void ShouldFindSingleComponentDependency()
+            {
+                // then
+                var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                var relationship = componentA.relationships.Single();
+
+                Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
+            }
+
+            [Component]
+            public class ComponentA
+            {
+                public ComponentB FirstDependencyToB { get; set; }
+
+                public ComponentB SecondDependencyToB { get; set; }
+            }
+
+            [Component]
+            public class ComponentB
+            {
+            }
+        }
     }
 }
