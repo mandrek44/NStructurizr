@@ -14,6 +14,11 @@ namespace NStructurizr.Core
                 action(element);
         }
 
+        public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
+        {
+            return new HashSet<T>(source);
+        }
+
         public static void RemoveIf<T>(this ISet<T> source,
             Func<T, bool> action)
         {

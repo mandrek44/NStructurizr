@@ -12,27 +12,26 @@ namespace NStructurizr.Core.Attributes
         {
             typePredicate = typePredicate ?? (type => true);
 
-            var componentTypes = FindComponentTypes(assembly, typePredicate);
+            var componentTypes = FindComponentTypes(assembly, typePredicate).ToHashSet();
             var components = componentTypes.ToDictionary(type => type, type => CreateComponent(type, parentElement));
 
             componentTypes
-                .SelectMany(type => FindTypeFieldDependencies(type, typePredicate))
+                .SelectMany(type => FindTypeFieldDependencies(type, componentTypes))
                 .Distinct()
                 .ForEach(d => components[d.Parent].Uses(components[d.Child], string.Empty));
         }
 
-        private static Type[] FindComponentTypes(Assembly assembly, Func<Type, bool> typePredicate)
+        private static IEnumerable<Type> FindComponentTypes(Assembly assembly, Func<Type, bool> typePredicate)
         {
             return assembly.GetTypes()
                 .Where(typePredicate)
-                .Where(IsComponentType)
-                .ToArray();
+                .Where(IsComponentType);
         }
 
-        private static IEnumerable<TypeDependency> FindTypeFieldDependencies(Type parent, Func<Type, bool> typePredicate)
+        private static IEnumerable<TypeDependency> FindTypeFieldDependencies(Type parent, ICollection<Type> allComponentTypes)
         {
             return parent.GetProperties()
-                .Where(property => typePredicate(property.PropertyType) && IsComponentType(property.PropertyType))
+                .Where(property => allComponentTypes.Contains(property.PropertyType))
                 .Select(property => new TypeDependency {Parent = parent, Child = property.PropertyType});
         }
 
