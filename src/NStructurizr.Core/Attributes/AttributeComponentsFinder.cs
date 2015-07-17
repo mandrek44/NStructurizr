@@ -16,7 +16,7 @@ namespace NStructurizr.Core.Attributes
             var components = componentTypes.ToDictionary(type => type, type => CreateComponent(type, parentElement));
 
             componentTypes
-                .SelectMany(type => FindTypeFieldDependencies(type, componentTypes))
+                .SelectMany(type => TypeDependency.FindComponentDependencies(assembly.GetTypes(), type2 => componentTypes.Contains(type2)))
                 .Distinct()
                 .ForEach(d => components[d.Parent].Uses(components[d.Child], string.Empty));
         }
@@ -25,14 +25,7 @@ namespace NStructurizr.Core.Attributes
         {
             return assembly.GetTypes()
                 .Where(typePredicate)
-                .Where(IsComponentType);
-        }
-
-        private static IEnumerable<TypeDependency> FindTypeFieldDependencies(Type parent, ICollection<Type> allComponentTypes)
-        {
-            return parent.GetProperties()
-                .Where(property => allComponentTypes.Contains(property.PropertyType))
-                .Select(property => new TypeDependency {Parent = parent, Child = property.PropertyType});
+                .Where(type => type.CustomAttributes.Any(a => a.AttributeType == typeof(ComponentAttribute)));
         }
 
         private static Component CreateComponent(Type type, Container parentElement)
@@ -41,42 +34,6 @@ namespace NStructurizr.Core.Attributes
             component.ImplementingType = type;
 
             return component;
-        }
-
-        private static bool IsComponentType(Type type)
-        {
-            return type.CustomAttributes.Any(a => a.AttributeType == typeof(ComponentAttribute));
-        }
-
-        private struct TypeDependency
-        {
-            public Type Parent { get; set; }
-
-            public Type Child { get; set; }
-
-            public bool Equals(TypeDependency other)
-            {
-                return Parent == other.Parent && Child == other.Child;
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj)) return false;
-                return obj is TypeDependency && Equals((TypeDependency) obj);
-            }
-
-            public override int GetHashCode()
-            {
-                unchecked
-                {
-                    return ((Parent != null ? Parent.GetHashCode() : 0)*397) ^ (Child != null ? Child.GetHashCode() : 0);
-                }
-            }
-
-            public override string ToString()
-            {
-                return string.Format("Parent: {0}, Child: {1}", Parent, Child);
-            }
         }
     }
 }

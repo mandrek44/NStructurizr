@@ -45,6 +45,9 @@
   <ItemGroup>
     <Compile Include="Attributes\ComponentAttribute.cs" />
     <Compile Include="Attributes\AttributeComponentsFinder.cs" />
+    <Compile Include="Graphs.cs" />
+    <Compile Include="Attributes\TypeDependency.cs" />
+    <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="View\ComponentView.cs" />
     <Compile Include="View\Configuration.cs" />
     <Compile Include="View\ContainerView.cs" />
