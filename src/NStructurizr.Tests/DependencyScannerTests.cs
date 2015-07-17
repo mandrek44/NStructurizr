@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace NStructurizr.Tests
 {
-    public class DependencyScanner
+    public class DependencyScannerTests
     {
         public class DependencyTestsBase
         {
