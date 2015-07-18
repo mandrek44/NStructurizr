@@ -6,15 +6,24 @@ namespace NStructurizr.Core.Attributes
 {
     public class TypeDependency
     {
-        public TypeDependency(Type parent, Type child)
+        private readonly Type _parent;
+        private readonly Type _child;
+
+        public Type Parent
         {
-            Parent = parent;
-            Child = child;
+            get { return _parent; }
         }
 
-        public Type Parent { get; private set; }
+        public Type Child
+        {
+            get { return _child; }
+        }
 
-        public Type Child { get; private set; }
+        public TypeDependency(Type parent, Type child)
+        {
+            _parent = parent;
+            _child = child;
+        }
 
         public static IEnumerable<TypeDependency> FindComponentDependencies(Type[] allTypes, Func<Type, bool> isComponent)
         {
@@ -37,28 +46,24 @@ namespace NStructurizr.Core.Attributes
             return componentTypes.SelectMany(findComponentDependencies);
         }
 
-        private static IEnumerable<TypeDependency> FindTypeDependencies(Type type)
+        private static IEnumerable<TypeDependency> FindTypeDependencies(Type parent)
         {
-            var directlyDependentTypes = new[]
-            {
-                type.GetFields().Select(field => field.FieldType),
-                type.GetProperties().Select(property => property.PropertyType),
-                type.GetMethods().SelectMany(method => method.GetParameters().Select(parameter => parameter.ParameterType).Concat(new [] {method.ReturnType})),
-                type.GetConstructors().SelectMany(constructor => constructor.GetParameters().Select(parameter => parameter.ParameterType)),
-                type.GetInterfaces()
-            }
-                .SelectMany(x => x)
+            var directlyDependentTypes = parent.GetFields().Select(field => field.FieldType)
+                .Concat(parent.GetProperties().Select(property => property.PropertyType))
+                .Concat(parent.GetMethods().SelectMany(method => method.GetParameters().Select(parameter => parameter.ParameterType).Concat(new[] {method.ReturnType})))
+                .Concat(parent.GetConstructors().SelectMany(constructor => constructor.GetParameters().Select(parameter => parameter.ParameterType)))
                 .ToArray();
 
-            var genericDependentTypes = directlyDependentTypes.Where(t => type.IsGenericType).SelectMany(t => type.GenericTypeArguments);
+            var genericDependentTypes = directlyDependentTypes
+                .Where(t => parent.IsGenericType)
+                .SelectMany(t => parent.GenericTypeArguments);
 
-            return new[]
-            {
-                directlyDependentTypes,
-                genericDependentTypes
-            }.SelectMany(child => child)
-                .Select(x => new TypeDependency(type, x))
-                .ToArray();
+            var revertedInterfaceDependecies = parent.GetInterfaces().Select(interfaceType => new TypeDependency(interfaceType, parent));
+
+            return directlyDependentTypes
+                .Concat(genericDependentTypes)
+                .Select(t => new TypeDependency(parent, t))
+                .Concat(revertedInterfaceDependecies);
         }
 
         public bool Equals(TypeDependency other)

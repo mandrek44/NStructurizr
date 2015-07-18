@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace NStructurizr.Tests
 {
-    public class DependencyScannerTests
+    public partial class DependencyScannerTests
     {
         public class DependencyTestsBase
         {
@@ -21,9 +21,9 @@ namespace NStructurizr.Tests
                 TestClassType = GetType();
 
                 // when
-                ComponentsConnector.FillContainerComponents(TestContainer, TestClassType.Assembly, new AttributeComponentsFinder(), type => type.FullName.Contains(TestClassType.FullName));
+                ComponentRelationshipsFinder.FindContainerRelationships(TestContainer, new AttributeComponentsFinder(), type => type.FullName.Contains(TestClassType.FullName), TestClassType.Assembly);
             }
-        }
+        }        
 
         public class GivenTwoComponents : DependencyTestsBase
         {
@@ -45,91 +45,168 @@ namespace NStructurizr.Tests
             }
         }
 
-        public class GivenPropertyDependency : DependencyTestsBase
+        [TestFixture]
+        public class PropertyDependencies
         {
-            [Test]
-            public void ShouldFindComponentDependency()
+            public class GivenPropertyDependency : DependencyTestsBase
             {
-                // then
-                var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
-                var relationship = componentA.relationships.Single();
+                [Test]
+                public void ShouldFindComponentDependency()
+                {
+                    // then
+                    var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                    var relationship = componentA.relationships.Single();
 
-                Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
-                Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
+                    Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                    Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
+                }
+
+                [Component]
+                public class ComponentA
+                {
+                    public ComponentB DependencyToB { get; set; }
+                }
+
+                [Component]
+                public class ComponentB
+                {
+                }
             }
 
-            [Component]
-            public class ComponentA
+            public class GivenDoublePropertyDependency : DependencyTestsBase
             {
-                public ComponentB DependencyToB { get; set; }
+                [Test]
+                public void ShouldFindSingleComponentDependency()
+                {
+                    // then
+                    var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                    var relationship = componentA.relationships.Single();
+
+                    Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                    Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
+                }
+
+                [Component]
+                public class ComponentA
+                {
+                    public ComponentB FirstDependencyToB { get; set; }
+
+                    public ComponentB SecondDependencyToB { get; set; }
+                }
+
+                [Component]
+                public class ComponentB
+                {
+                }
             }
 
-            [Component]
-            public class ComponentB
+            public class GivenIndirectDegreeDependency : DependencyTestsBase
             {
+                [Test]
+                public void ShouldFindSingleComponentDependency()
+                {
+                    // then
+                    var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
+
+                    // ComponentC is not dependency of ComponentA
+                    var relationship = componentA.relationships.Single();
+
+                    Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                    Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
+                }
+
+                [Component]
+                public class ComponentA
+                {
+                    public SomeClass DependencyToSomeClass { get; set; }
+                }
+
+                public class SomeClass
+                {
+                    public ComponentB DependencyToB { get; set; }
+                }
+
+                [Component]
+                public class ComponentB
+                {
+                    public ComponentC DependencyToC { get; set; }
+                }
+
+                [Component]
+                public class ComponentC
+                {
+                }
             }
         }
 
-        public class GivenDoublePropertyDependency : DependencyTestsBase
+        [TestFixture]
+        public class InterfaceDependencies
         {
-            [Test]
-            public void ShouldFindSingleComponentDependency()
+
+            public class GivenIndirectInterfaceDependency : DependencyTestsBase
             {
-                // then
-                var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
-                var relationship = componentA.relationships.Single();
+                [Test]
+                public void ShouldFindSingleComponentDependency()
+                {
+                    // then
+                    var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                    var relationship = componentA.relationships.Single();
 
-                Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
-                Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
-            }
+                    Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                    Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
+                }
 
-            [Component]
-            public class ComponentA
-            {
-                public ComponentB FirstDependencyToB { get; set; }
+                [Component]
+                public class ComponentA
+                {
+                    public ISomeInterface DependencyToSomeInterface { get; set; }
+                }
 
-                public ComponentB SecondDependencyToB { get; set; }
-            }
+                public interface ISomeInterface
+                {
+                }
 
-            [Component]
-            public class ComponentB
-            {
+                public class SomeClass : ISomeInterface
+                {
+                    public ComponentB DependencyToB { get; set; }
+                }
+
+                [Component]
+                public class ComponentB
+                {
+                }
             }
         }
 
-        public class Given2ndDegreeDependency : DependencyTestsBase
+        [TestFixture]
+        public class ConstructorDependecies
         {
-            [Test]
-            public void ShouldFindSingleComponentDependency()
-            {
-                // then
-                var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
-                var relationship = componentA.relationships.Single();
 
-                Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
-                Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
-            }
-
-            [Component]
-            public class ComponentA
+            public class GivenConstructorDependency : DependencyTestsBase
             {
-                public SomeClass DependencyToSomeClass { get; set; }
-            }
+                [Test]
+                public void ShouldFindSingleComponentDependency()
+                {
+                    // then
+                    var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                    var relationship = componentA.relationships.Single();
 
-            public class SomeClass
-            {
-                public ComponentB DependencyToB { get; set; }
-            }
+                    Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                    Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
+                }
 
-            [Component]
-            public class ComponentB
-            {
-                public ComponentC DependencyToC { get; set; }
-            }
+                [Component]
+                public class ComponentA
+                {
+                    public ComponentA(ComponentB dependencyToComponentB)
+                    {
+                    }
+                }
 
-            [Component]
-            public class ComponentC
-            {
+                [Component]
+                public class ComponentB
+                {
+                }
             }
         }
     }

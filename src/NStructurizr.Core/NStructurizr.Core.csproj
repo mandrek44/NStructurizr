@@ -46,7 +46,7 @@
     <Compile Include="Attributes\ClassNameComponentsFinder.cs" />
     <Compile Include="Attributes\ComponentAttribute.cs" />
     <Compile Include="Attributes\AttributeComponentsFinder.cs" />
-    <Compile Include="Attributes\ComponentsConnector.cs" />
+    <Compile Include="Attributes\ComponentRelationshipsFinder.cs" />
     <Compile Include="Attributes\CompositeComponentsFinder.cs" />
     <Compile Include="Attributes\IComponentsFinder.cs" />
     <Compile Include="Graphs.cs" />
