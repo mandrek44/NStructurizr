@@ -6,9 +6,15 @@ namespace NStructurizr.Core.Attributes
 {
     public class TypeDependency
     {
-        public Type Parent { get; set; }
+        public TypeDependency(Type parent, Type child)
+        {
+            Parent = parent;
+            Child = child;
+        }
 
-        public Type Child { get; set; }
+        public Type Parent { get; private set; }
+
+        public Type Child { get; private set; }
 
         public static IEnumerable<TypeDependency> FindComponentDependencies(Type[] allTypes, Func<Type, bool> isComponent)
         {
@@ -19,10 +25,13 @@ namespace NStructurizr.Core.Attributes
 
             var componentTypes = allTypes.Where(isComponent).ToHashSet();
 
-            Func<Type, IEnumerable<TypeDependency>> findComponentDependencies = componentType =>
+            Func<Type, IEnumerable<TypeDependency>> findComponentDependencies = parentComponentType =>
             {
-                return Graphs.BreadthFirstSearch(componentType, type => typeDependencies.GetOrDefault(type), type => componentTypes.Contains(type))
-                    .Select(type => new TypeDependency { Parent = componentType, Child = type });
+                return Graphs.BreadthFirstSearch(
+                    parentComponentType,
+                    type => type == parentComponentType || !componentTypes.Contains(type) ? typeDependencies.GetOrDefault(type) : null, // Retrieve dependencies only for non component types (except the parent compontnt type)
+                    type => componentTypes.Contains(type))
+                    .Select(type => new TypeDependency(parentComponentType, type));
             };
 
             return componentTypes.SelectMany(findComponentDependencies);
@@ -47,8 +56,8 @@ namespace NStructurizr.Core.Attributes
             {
                 directlyDependentTypes,
                 genericDependentTypes
-            }.SelectMany(x => x)
-                .Select(x => new TypeDependency { Parent = type, Child = x })
+            }.SelectMany(child => child)
+                .Select(x => new TypeDependency(type, x))
                 .ToArray();
         }
 

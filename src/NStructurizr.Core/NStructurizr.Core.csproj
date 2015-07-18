@@ -43,8 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ClassNameComponentsFinder.cs" />
     <Compile Include="Attributes\ComponentAttribute.cs" />
     <Compile Include="Attributes\AttributeComponentsFinder.cs" />
+    <Compile Include="Attributes\ComponentsConnector.cs" />
+    <Compile Include="Attributes\CompositeComponentsFinder.cs" />
+    <Compile Include="Attributes\IComponentsFinder.cs" />
     <Compile Include="Graphs.cs" />
     <Compile Include="Attributes\TypeDependency.cs" />
     <Compile Include="DictionaryExtensions.cs" />

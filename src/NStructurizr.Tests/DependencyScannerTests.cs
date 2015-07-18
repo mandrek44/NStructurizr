@@ -21,7 +21,7 @@ namespace NStructurizr.Tests
                 TestClassType = GetType();
 
                 // when
-                AttributeComponentsFinder.FillContainerComponents(TestContainer, TestClassType.Assembly, type => type.FullName.Contains(TestClassType.FullName));
+                ComponentsConnector.FillContainerComponents(TestContainer, TestClassType.Assembly, new AttributeComponentsFinder(), type => type.FullName.Contains(TestClassType.FullName));
             }
         }
 
@@ -93,6 +93,42 @@ namespace NStructurizr.Tests
 
             [Component]
             public class ComponentB
+            {
+            }
+        }
+
+        public class Given2ndDegreeDependency : DependencyTestsBase
+        {
+            [Test]
+            public void ShouldFindSingleComponentDependency()
+            {
+                // then
+                var componentA = TestContainer.components.First(component => component.getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                var relationship = componentA.relationships.Single();
+
+                Assert.That(relationship.getSource().getCanonicalName() == "/testSystem/testContainer/ComponentA");
+                Assert.That(relationship.getDestination().getCanonicalName() == "/testSystem/testContainer/ComponentB");
+            }
+
+            [Component]
+            public class ComponentA
+            {
+                public SomeClass DependencyToSomeClass { get; set; }
+            }
+
+            public class SomeClass
+            {
+                public ComponentB DependencyToB { get; set; }
+            }
+
+            [Component]
+            public class ComponentB
+            {
+                public ComponentC DependencyToC { get; set; }
+            }
+
+            [Component]
+            public class ComponentC
             {
             }
         }
